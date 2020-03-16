@@ -9,13 +9,13 @@
       </a>
     </swiper-slide>
     <!-- Optional controls -->
-    <div class="swiper-pagination"  slot="pagination"></div>
+    <div class="swiper-pagination" slot="pagination"></div>
   </swiper>
 </template>
 
 <script>
   import 'swiper/dist/css/swiper.css'
-  import { swiper, swiperSlide } from 'vue-awesome-swiper'
+  import {swiper, swiperSlide} from 'vue-awesome-swiper'
 
   export default {
     name: "Banner",
@@ -56,6 +56,23 @@
     .item {
       width: 100%;
       height: 300px;
+    }
+  }
+</style>
+<style lang="scss">
+  @import "../assets/css/mixin";
+
+  /* 注意：如果想覆盖 swiper 样式，那么 style 标签不能是 scoped 的，不则无法覆盖 */
+  .banner {
+    .swiper-pagination-bullet {
+      width: 16px;
+      height: 16px;
+      background-color: #fff;
+      opacity: 1;
+    }
+
+    .swiper-pagination-bullet-active {
+      @include bg_color();
     }
   }
 </style>
