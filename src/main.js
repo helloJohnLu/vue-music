@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import fastclick from "fastclick"
+import './assets/css/base.scss'
+
 
 Vue.config.productionTip = false
 

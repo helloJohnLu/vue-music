@@ -9,6 +9,7 @@
       let meta = `<meta name="viewport" content="width=device-width, initial-scale=${scale}, maximum-scale=${scale}, minimum-scale=${scale}, user-scalable=no">`;
       document.write(meta);
       document.documentElement.style.fontSize = window.innerWidth / 7.5 + "px";
+      document.documentElement.setAttribute('data-dpr', window.devicePixelRatio + '');
     </script>
   </head>
   <body>
