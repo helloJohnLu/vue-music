@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="header" @click="switchTheme">
     <div class="header-left"></div>
     <p class="header-title">John's music list</p>
     <div class="header-right"></div>
@@ -8,7 +8,22 @@
 
 <script>
   export default {
-    name: "Header"
+    name: "Header",
+    data() {
+      return {
+        themes: ['red', 'green', 'night'],
+        index: 0
+      }
+    },
+    methods: {
+      switchTheme() {
+        this.index++;
+        if (this.index >= this.themes.length) {
+          this.index = 0;
+        }
+        document.documentElement.setAttribute('data-theme', this.themes[this.index]);
+      }
+    }
   }
 </script>
 
@@ -27,8 +42,16 @@
     .header-left, .header-right {
       width: 84px;
       height: 84px;
-      background-color: #000;
+      /*background-color: #000;*/
       margin-top: 8px;
+    }
+
+    .header-left {
+      @include bg_img("../assets/images/logo");
+    }
+
+    .header-right {
+      @include bg_img("../assets/images/account")
     }
   }
 
