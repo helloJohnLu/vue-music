@@ -43,6 +43,50 @@
   }
 }
 
+// 文字换肤。
+@mixin bg_sub_color() {
+  background-color: $background-color-sub-theme; // 默认
+  [data-theme=green] & {
+    background-color: $background-color-sub-theme1;
+  }
+  [data-theme=night] & {
+    background-color: $background-color-sub-theme2;
+  }
+}
+
+// 默认字体颜色
+@mixin font_color() {
+  color: $font-color-theme; // 默认
+  [data-theme=green] & {
+    color: $font-color-theme1;
+  }
+  [data-theme=night] & {
+    color: $font-color-theme2;
+  }
+}
+
+// 激活字体颜色
+@mixin font_active_color() {
+  color: $font-active-color-theme; // 默认
+  [data-theme=green] & {
+    color: $font-active-color-theme1;
+  }
+  [data-theme=night] & {
+    color: $font-active-color-theme2;
+  }
+}
+
+// 激活边框颜色
+@mixin border_color() {
+  border-color: $border-color-theme; // 默认
+  [data-theme=green] & {
+    border-color: $border-color-theme1;
+  }
+  [data-theme=night] & {
+    border-color: $border-color-theme2;
+  }
+}
+
 // 图片换肤
 @mixin bg_img($url) {
   [data-theme=red] & {
