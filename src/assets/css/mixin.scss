@@ -3,8 +3,12 @@
 /* 根据 dpr 计算 font-size */
 @mixin font_dpr($font-size) {
   font-size: $font-size;
-  [data-dpr="2"] & { font-size: $font-size * 2; }
-  [data-dpr="3"] & { font-size: $font-size * 3; }
+  [data-dpr="2"] & {
+    font-size: $font-size * 2;
+  }
+  [data-dpr="3"] & {
+    font-size: $font-size * 3;
+  }
 }
 
 /* 通过该函数设置字体大小，后期方便统一管理；*/
@@ -25,6 +29,16 @@
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp:$row;
+  -webkit-line-clamp: $row;
 }
 
+// 界面换肤。根据属性选择器来设置背景颜色
+@mixin bg_color() {
+  background-color: $background-color-theme; // 默认
+  [data-theme=green] & {
+    background-color: $background-color-theme1;
+  }
+  [data-theme=night] & {
+    background-color: $background-color-theme2;
+  }
+}
