@@ -10,7 +10,7 @@ export default {
     return new Promise((resolve, reject) => {
       axios.get(path, {
         params: data
-      }).then(response => resolve(response))
+      }).then(response => resolve(response.data))
         .catch(error => reject(error))
     });
   },
@@ -18,7 +18,7 @@ export default {
   post(path = '', data = {}) {
     return new Promise((resolve, reject) => {
       axios.get(path, data)
-        .then(response => resolve(response))
+        .then(response => resolve(response.data))
         .catch(error => reject(error))
     });
   },
