@@ -1,5 +1,7 @@
 <template>
-  <swiper :options="swiperOption" class="banner">
+  <!-- swiper 的 bug，如果数据是从网络获取的，自动轮播到最后一页之后就不轮播了 -->
+  <!-- 只需要在 swiper 组件上加上 v-if="banners.length > 0" 即可此 bug -->
+  <swiper :options="swiperOption" class="banner" v-if="banners.length > 0">
     <!-- slides -->
     <swiper-slide v-for="value in banners" :key="value.bannerId" class="item">
       <a :href="value.url">
