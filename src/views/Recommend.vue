@@ -5,8 +5,13 @@
 </template>
 
 <script>
+  import {getBanner} from "../api/index";
+
   export default {
-    name: "Recommend"
+    name: "Recommend",
+    created() {
+      getBanner().then(data => console.log(data)).catch(err => console.log(err))
+    }
   }
 </script>
 

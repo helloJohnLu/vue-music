@@ -1,0 +1,4 @@
+// 这个 JS 文件是专门用于管理各种接口地址
+import Network from "./network";
+
+export const getBanner = () => Network.get('/banner?type=2')
