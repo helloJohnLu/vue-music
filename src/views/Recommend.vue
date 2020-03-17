@@ -1,7 +1,7 @@
 <template>
   <div class="recommend">
     <Banner :banners="banners"></Banner>
-    <Personalized></Personalized>
+    <Personalized :personalized="personalized"></Personalized>
   </div>
 </template>
 
