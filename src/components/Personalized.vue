@@ -28,11 +28,14 @@
   @import "../assets/css/variable";
 
   .personalized {
+    @include bg_sub_color();
+
     .personalized-top {
       width: 100%;
       height: 84px;
       line-height: 84px;
       @include bg_sub_color();
+      border-bottom: 1px solid #ccc;
       padding: 0 20px;
 
       h3 {
@@ -61,7 +64,9 @@
       }
 
       p {
-        @include clamp(2)
+        @include clamp(2);
+        @include font_color();
+        @include font_size($font_medium_s);
       }
     }
   }
