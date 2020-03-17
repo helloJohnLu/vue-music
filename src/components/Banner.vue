@@ -5,8 +5,7 @@
     <!-- slides -->
     <swiper-slide v-for="value in banners" :key="value.bannerId" class="item">
       <a :href="value.url">
-<!--        <img :src="value.pic" alt="">-->
-        <img v-lazy="value.pic" alt="">
+        <img :src="value.pic" alt="">
       </a>
     </swiper-slide>
     <!-- Optional controls -->
