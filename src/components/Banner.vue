@@ -44,9 +44,11 @@
       }
     },
     props: {
-      banners: Array,
-      default: () => [],
-      required: true
+      banners: {
+        type: Array,
+        default: () => [],
+        required: true
+      }
     }
   }
 </script>

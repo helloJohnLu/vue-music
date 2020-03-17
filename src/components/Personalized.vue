@@ -1,7 +1,7 @@
 <template>
   <div class="personalized">
     <div class="personalized-top">
-      <h3>推荐歌单</h3>
+      <h3>{{title}}</h3>
     </div>
     <div class="personalized-list">
       <div class="item" v-for="value in personalized" :key="value.id">
@@ -16,9 +16,16 @@
   export default {
     name: "Personalized",
     props: {
-      personalized: Array,
-      default: () => [],
-      required: true
+      personalized: {
+        type: Array,
+        default: () => [],
+        required: true
+      },
+      title: {
+        type: String,
+        default: '',
+        required: true
+      }
     }
   }
 </script>
@@ -67,6 +74,7 @@
         @include clamp(2);
         @include font_color();
         @include font_size($font_medium_s);
+        text-align: center;
       }
     }
   }
