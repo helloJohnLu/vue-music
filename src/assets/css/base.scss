@@ -4,10 +4,9 @@
 
 html, body {
   width: 100%;
-  //height: 100%;
-  //overflow: hidden;
-  // 解决IScroll拖拽卡顿问题
-  touch-action: none;
+  height: 100%;
+  overflow: hidden;
+  touch-action: none;  // 解决 IScroll 拖拽卡顿问题
 }
 
 body {

@@ -31,6 +31,8 @@
     @include bg_sub_color();
     display: flex;
     justify-content: space-around;
+    position: relative;
+    z-index: 999;
 
     .item {
       span {
