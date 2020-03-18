@@ -33,7 +33,6 @@
 
     li {
       width: 100%;
-      height: 110px;
       padding: 20px;
       box-sizing: border-box;
       @include bg_sub_color();
@@ -56,6 +55,7 @@
       .bottom-title {
         @include font_color();
         @include font_size($font_large);
+        @include no-wrap();
       }
     }
 

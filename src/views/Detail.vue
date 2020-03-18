@@ -2,7 +2,11 @@
   <div class="detail">
     <SubHeader :title="playlist.name"></SubHeader>
     <DetailTop :img-path="playlist.coverImgUrl"></DetailTop>
-    <DetailBottom :playlist="playlist.tracks"></DetailBottom>
+    <div class="bottom">
+      <ScrollView>
+        <DetailBottom :playlist="playlist.tracks"></DetailBottom>
+      </ScrollView>
+    </div>
   </div>
 </template>
 
@@ -10,6 +14,7 @@
   import SubHeader from "../components/SubHeader";
   import DetailTop from "../components/DetailTop";
   import DetailBottom from "../components/DetailBottom";
+  import ScrollView from "../components/ScrollView";
   import {getPlayList} from "../api/index";
 
   export default {
@@ -17,7 +22,8 @@
     components: {
       SubHeader,
       DetailTop,
-      DetailBottom
+      DetailBottom,
+      ScrollView
     },
     data: function() {
       return {
@@ -33,11 +39,22 @@
 </script>
 
 <style scoped lang="scss">
+  @import "../assets/css/mixin";
+
   .detail {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    @include bg_color();
+
+    .bottom {
+      position: fixed;
+      top: 500px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
   }
 </style>
