@@ -54,8 +54,12 @@
       this.$refs.scroll_view.scrolling(offsetY => {
         // console.log(offsetY);
         if (offsetY < 0) {
-          let scale = 10 * Math.abs(offsetY) / defaultHeight;
-          this.$refs.top.$el.style.filter = `blur(${scale}px)`;
+          // 注意点：高斯模糊效果非常消耗性能，不推荐在移动端使用。如果非要在移动端中使用，建议只设置一次
+          // let scale = 10 * Math.abs(offsetY) / defaultHeight;
+          // this.$refs.top.$el.style.filter = `blur(${scale}px)`;
+
+          let scale = Math.abs(offsetY) / defaultHeight;
+          this.$refs.top.changeMask(scale);
         }else {
           let scale = 1 + offsetY / defaultHeight;
           this.$refs.top.$el.style.transform = `scale(${scale})`;
