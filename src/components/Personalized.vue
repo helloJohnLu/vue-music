@@ -26,11 +26,16 @@
         type: String,
         default: '',
         required: true
+      },
+      type: {
+        type: String,
+        default: '',
+        required: true
       }
     },
     methods: {
       selectItem(id) {
-        this.$emit('select', id);
+        this.$emit('select', id, this.type);
       }
     }
   }

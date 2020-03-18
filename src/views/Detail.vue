@@ -15,7 +15,7 @@
   import DetailTop from "../components/DetailTop";
   import DetailBottom from "../components/DetailBottom";
   import ScrollView from "../components/ScrollView";
-  import {getPlayList} from "../api/index";
+  import {getPlayList, getAlbum} from "../api/index";
 
   export default {
     name: "Detail",
@@ -27,13 +27,25 @@
     },
     data: function() {
       return {
-        playlist: []
+        playlist: {}
       }
     },
     created() {
-      getPlayList({id: this.$route.params.id})
-        .then(data => this.playlist = data.playlist)
-        .catch(err => console.log(err));
+      if (this.$route.params.type === 'personalized') {
+        getPlayList({id: this.$route.params.id})
+          .then(data => this.playlist = data.playlist)
+          .catch(err => console.log(err));
+      } else if (this.$route.params.type === 'album') {
+        getAlbum({id: this.$route.params.id})
+          .then(data => {
+            this.playlist = {
+              name: data.album.name,
+              coverImgUrl: data.album.picUrl,
+              tracks: data.songs
+            }
+          })
+          .catch(err => console.log(err));
+      }
     },
     mounted() {
       let defaultHeight = this.$refs.top.$el.offsetHeight;  // $el 组件根元素
