@@ -1,19 +1,22 @@
 <template>
   <div class="header" @click="switchTheme">
     <div class="header-left" @click.stop="goBack"></div>
-    <p class="header-title">{{title}}</p>
+    <div class="header-title">
+      <h3>歌手</h3>
+      <p>牛牛</p>
+    </div>
     <div class="header-right"></div>
   </div>
 </template>
 
 <script>
   export default {
-    name: "SubHeader",
+    name: "PlayHeader",
     props: {
       title: {
         type: String,
         default: '',
-        required: true
+        // required: true
       }
     },
     data() {
@@ -38,8 +41,8 @@
 </script>
 
 <style scoped lang="scss">
-  @import "../assets/css/variable";
-  @import "../assets/css/mixin";
+  @import "../../assets/css/variable";
+  @import "../../assets/css/mixin";
 
   .header {
     width: 100%;
@@ -59,19 +62,21 @@
     }
 
     .header-left {
-      @include bg_img("../assets/images/back");
+      @include bg_img("../../assets/images/down");
     }
 
     .header-right {
-      @include bg_img("../assets/images/more")
+      //@include bg_img("../assets/images/more")
     }
   }
 
   .header-title {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    line-height: 100px;
     color: #fff;
-    font-weight: bold;
     @include font_size($font_medium);
     @include no-wrap();
   }

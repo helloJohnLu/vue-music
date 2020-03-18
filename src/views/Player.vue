@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import PlayHeader from "../components/PlayHeader";
+  import PlayHeader from "../components/Player/PlayHeader";
 
   export default {
     name: "Play",

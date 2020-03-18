@@ -30,8 +30,8 @@
 </script>
 
 <style scoped lang="scss">
-  @import "../assets/css/mixin";
-  @import "../assets/css/variable";
+  @import "../../assets/css/mixin";
+  @import "../../assets/css/variable";
 
   .song {
     width: 100%;

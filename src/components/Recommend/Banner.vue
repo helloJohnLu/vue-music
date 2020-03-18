@@ -62,7 +62,7 @@
   }
 </style>
 <style lang="scss">
-  @import "../assets/css/mixin";
+  @import "../../assets/css/mixin";
 
   /* 注意：如果想覆盖 swiper 样式，那么 style 标签不能是 scoped 的，不则无法覆盖 */
   .banner {
