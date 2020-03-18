@@ -2,18 +2,21 @@
   <div class="player">
     <PlayHeader></PlayHeader>
     <PlayerMiddle></PlayerMiddle>
+    <PlayerBottom></PlayerBottom>
   </div>
 </template>
 
 <script>
   import PlayHeader from "../components/Player/PlayHeader";
   import PlayerMiddle from "../components/Player/PlayerMiddle";
+  import PlayerBottom from "../components/Player/PlayerBottom";
 
   export default {
     name: "Play",
     components: {
       PlayHeader,
-      PlayerMiddle
+      PlayerMiddle,
+      PlayerBottom
     }
   }
 </script>
