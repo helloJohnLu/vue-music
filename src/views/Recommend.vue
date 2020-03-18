@@ -8,7 +8,9 @@
         <SongList :songs="songs"></SongList>
       </div>
     </ScrollView>
-    <router-view></router-view>
+    <transition>
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -67,5 +69,15 @@
     right: 0;
     bottom: 0;
     overflow: hidden;
+  }
+
+  .v-enter, .v-leave-to {
+    transform: translateX(100%);
+  }
+  .v-enter-to, .v-leave {
+    transform: translateX(0%);
+  }
+  .v-enter-active, .v-leave-active {
+    transition: transform 1s;
   }
 </style>
