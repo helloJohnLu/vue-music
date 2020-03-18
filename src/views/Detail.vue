@@ -1,9 +1,9 @@
 <template>
   <div class="detail">
     <SubHeader :title="playlist.name"></SubHeader>
-    <DetailTop :img-path="playlist.coverImgUrl"></DetailTop>
+    <DetailTop :img-path="playlist.coverImgUrl" ref="top"></DetailTop>
     <div class="bottom">
-      <ScrollView>
+      <ScrollView ref="scroll_view">
         <DetailBottom :playlist="playlist.tracks"></DetailBottom>
       </ScrollView>
     </div>
@@ -34,6 +34,21 @@
       getPlayList({id: this.$route.params.id})
         .then(data => this.playlist = data.playlist)
         .catch(err => console.log(err));
+    },
+    mounted() {
+      let defaultHeight = this.$refs.top.$el.offsetHeight;  // $el 组件根元素
+      // console.log(defaultHeight);
+
+      this.$refs.scroll_view.scrolling(offsetY => {
+        // console.log(offsetY);
+        if (offsetY < 0) {
+          let scale = 10 * Math.abs(offsetY) / defaultHeight;
+          this.$refs.top.$el.style.filter = `blur(${scale}px)`;
+        }else {
+          let scale = 1 + offsetY / defaultHeight;
+          this.$refs.top.$el.style.transform = `scale(${scale})`;
+        }
+      })
     }
   }
 </script>

@@ -13,6 +13,7 @@
       this.iscroll = new IScroll(this.$refs.wrapper, {
         mouseWheel: true,
         scrollbars: false,
+        probeType: 3,  // 像素级触发 scroll 事件，此时滚动只关注 requestAnimationFrame
         // 解决拖拽卡顿问题
         scrollX: false,
         scrollY: true,
@@ -51,6 +52,14 @@
       * 参数一：告诉观察者对象我们需要观察谁
       * 参数二：告诉观察者对象我们需要观察什么内容
       */
+    },
+    methods: {
+      // 提供一个监听滚动距离的方法给外界
+      scrolling(fn) {
+        this.iscroll.on('scroll', function () {
+          fn(this.y);
+        })
+      }
     }
   }
 </script>
