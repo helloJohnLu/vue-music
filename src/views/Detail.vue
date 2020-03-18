@@ -1,18 +1,20 @@
 <template>
   <div class="detail">
     <SubHeader :title="playlist.name"></SubHeader>
+    <DetailTop :img-path="playlist.coverImgUrl"></DetailTop>
   </div>
 </template>
 
 <script>
   import SubHeader from "../components/SubHeader";
+  import DetailTop from "../components/DetailTop";
   import {getPlayList} from "../api/index";
-
 
   export default {
     name: "Detail",
     components: {
-      SubHeader
+      SubHeader,
+      DetailTop
     },
     data: function() {
       return {
