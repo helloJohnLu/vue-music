@@ -31,6 +31,8 @@
           // 如果需要分页器
           pagination: {
             el: '.swiper-pagination',
+            bulletClass : 'my-bullet', // 分页器小圆点类名
+            bulletActiveClass: 'my-bullet-active', // 激活的小圆点类名
           },
           // 异步加载
           observer: true,
@@ -76,5 +78,21 @@
         @include font_size($font_medium);
       }
     }
+  }
+</style>
+<style lang="scss">
+  @import "../../assets/css/mixin";
+
+  .my-bullet {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius:10px;
+    background-color: #fff;
+    margin: 0 20px;
+  }
+  .my-bullet-active {
+    @include bg_color();
+    width: 60px;
   }
 </style>
