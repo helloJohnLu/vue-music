@@ -26,7 +26,9 @@
           </ul>
         </ScrollView>
       </div>
-      <div class="player-bottom"></div>
+      <div class="player-bottom">
+        <p>关闭</p>
+      </div>
     </div>
   </div>
 </template>
@@ -134,6 +136,19 @@
           }
         }
 
+      }
+
+      .player-bottom {
+        width: 100%;
+        height: 100px;
+        line-height: 100px;
+        @include bg_color();
+
+        p {
+          text-align: center;
+          color: #fff;
+          @include font_size($font_medium);
+        }
       }
     }
   }
