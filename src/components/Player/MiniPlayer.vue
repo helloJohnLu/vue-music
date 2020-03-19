@@ -43,6 +43,7 @@
 
       .player-left {
         display: flex;
+        padding-left: 30px;
 
         img {
           width: 100px;
@@ -70,7 +71,20 @@
       }
 
       .player-right {
+        display: flex;
+        align-items: center;
 
+        .play {
+          width: 84px;
+          height: 84px;
+          @include bg_img('../../assets/images/play')
+        }
+
+        .list {
+          width: 120px;
+          height: 120px;
+          @include bg_img('../../assets/images/list')
+        }
       }
     }
   }
