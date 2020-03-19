@@ -10,7 +10,7 @@
       </div>
       <div class="player-right">
         <div class="play"></div>
-        <div class="list"></div>
+        <div class="list" @click.stop="showList"></div>
       </div>
     </div>
   </div>
@@ -18,7 +18,12 @@
 
 <script>
   export default {
-    name: "MiniPlayer"
+    name: "MiniPlayer",
+    methods: {
+      showList() {
+        this.$emit('showList');
+      }
+    }
   }
 </script>
 
