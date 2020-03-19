@@ -58,6 +58,14 @@
             @include font_size($font_medium_s);
           }
         }
+
+        .top-right {
+          .del {
+            width: 84px;
+            height: 84px;
+            @include bg_img('../../assets/images/small_del');
+          }
+        }
       }
     }
   }
