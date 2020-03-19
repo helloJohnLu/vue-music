@@ -1,16 +1,19 @@
 <template>
   <div class="player">
-    <NormalPlayer></NormalPlayer>
+<!--    <NormalPlayer></NormalPlayer>-->
+    <MiniPlayer></MiniPlayer>
   </div>
 </template>
 
 <script>
   import NormalPlayer from "../components/Player/NormalPlayer";
+  import MiniPlayer from "../components/Player/MiniPlayer";
 
   export default {
     name: "Play",
     components: {
-      NormalPlayer
+      NormalPlayer,
+      MiniPlayer
     }
   }
 </script>
