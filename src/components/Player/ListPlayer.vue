@@ -10,15 +10,35 @@
           <div class="del"></div>
         </div>
       </div>
-      <div class="player-middle"></div>
+      <div class="player-middle">
+        <ScrollView>
+          <ul>
+            <li class="item">
+              <div class="item-left">
+                <div class="item-play"></div>
+                <p>歌手</p>
+              </div>
+              <div class="item-right">
+                <div class="item-favorite"></div>
+                <div class="item-del"></div>
+              </div>
+            </li>
+          </ul>
+        </ScrollView>
+      </div>
       <div class="player-bottom"></div>
     </div>
   </div>
 </template>
 
 <script>
+  import ScrollView from "../ScrollView";
+
   export default {
-    name: "ListPlayer"
+    name: "ListPlayer",
+    components: {
+      ScrollView
+    }
   }
 </script>
 
@@ -66,6 +86,54 @@
             @include bg_img('../../assets/images/small_del');
           }
         }
+      }
+
+      .player-middle {
+        .item {
+          height: 100px;
+          border-top: 1px solid #ccc;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 20px;
+          box-sizing: border-box;
+
+          .item-left {
+            display: flex;
+            align-items: center;
+
+            .item-play {
+              width: 56px;
+              height: 56px;
+              @include bg_img('../../assets/images/small_play');
+              margin-right: 20px;
+            }
+
+            p {
+              @include font_size($font_medium_s);
+              @include font_color();
+            }
+          }
+
+          .item-right {
+            display: flex;
+            align-items: center;
+
+            .item-favorite {
+              width: 56px;
+              height: 56px;
+              @include bg_img('../../assets/images/small_favorite')
+            }
+
+            .item-del {
+              width: 52px;
+              height: 52px;
+              margin-left: 20px;
+              @include bg_img('../../assets/images/small_close')
+            }
+          }
+        }
+
       }
     }
   }
