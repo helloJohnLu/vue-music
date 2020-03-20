@@ -4,7 +4,7 @@
       <div class="bottom-icon"></div>
       <div class="bottom-title">播放全部</div>
     </li>
-    <li v-for="value in playlist" :key="playlist.id" class="item">
+    <li v-for="value in playlist" :key="playlist.id" class="item" @click="selectMusic">
       <h3>{{value.name}}</h3>
       <p>{{value.al.name}} —— {{value.ar[0].name}}</p>
     </li>
@@ -19,6 +19,11 @@
         type: Array,
         default: () => [],
         required: true
+      }
+    },
+    methods: {
+      selectMusic() {
+        this.$store.dispatch('setFullScreen', true);
       }
     }
   }

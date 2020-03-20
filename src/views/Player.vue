@@ -1,6 +1,6 @@
 <template>
   <div class="player">
-<!--    <NormalPlayer></NormalPlayer>-->
+    <NormalPlayer></NormalPlayer>
     <MiniPlayer @showList="showList"></MiniPlayer>
     <ListPlayer ref="listPlayer"></ListPlayer>
   </div>
