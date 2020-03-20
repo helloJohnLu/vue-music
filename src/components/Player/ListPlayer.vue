@@ -203,11 +203,11 @@
             .item-play {
               width: 56px;
               height: 56px;
-              @include bg_img('../../assets/images/small_pause');
+              @include bg_img('../../assets/images/small_play');
               margin-right: 20px;
 
               &.active {
-                @include bg_img('../../assets/images/small_play');
+                @include bg_img('../../assets/images/small_pause');
               }
             }
 

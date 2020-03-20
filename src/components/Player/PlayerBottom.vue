@@ -150,10 +150,10 @@
       }
 
       .play {
-        @include bg_img('../../assets/images/pause');
+        @include bg_img('../../assets/images/play');
 
         &.active {
-          @include bg_img('../../assets/images/play');
+          @include bg_img('../../assets/images/pause');
         }
       }
 
