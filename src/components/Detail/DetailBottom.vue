@@ -12,6 +12,8 @@
 </template>
 
 <script>
+  import {mapActions} from "vuex";
+
   export default {
     name: "DetailBottom",
     props: {
@@ -22,8 +24,12 @@
       }
     },
     methods: {
+      ...mapActions([
+        'setFullScreen'
+      ]),
       selectMusic() {
-        this.$store.dispatch('setFullScreen', true);
+        // this.$store.dispatch('selectMusic', true);
+        this.setFullScreen(true);
       }
     }
   }
