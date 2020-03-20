@@ -7,7 +7,7 @@
     <div class="mini-player" v-show="this.isShowMiniPlayer">
       <div class="player-wrapper">
         <div class="player-left" @click="showNormalPlayer">
-          <img src="http://p4.music.126.net/ysEtllS9g67Dwb4fhwMh8w==/109951164795032738.jpg" alt="">
+          <img src="http://p4.music.126.net/ysEtllS9g67Dwb4fhwMh8w==/109951164795032738.jpg" ref="cd" alt="">
           <div class="player-title">
             <h3>歌手</h3>
             <p>歌手名</p>
@@ -64,8 +64,10 @@
       isPlaying(newValue, oldValue) {
         if (newValue) {
           this.$refs.play.classList.add('active');
+          this.$refs.cd.classList.add('active');
         } else {
           this.$refs.play.classList.remove('active');
+          this.$refs.cd.classList.remove('active');
         }
       }
     }
@@ -100,6 +102,11 @@
           height: 100px;
           border-radius: 50%;
           margin-right: 20px;
+          animation: sport 20s linear infinite;
+          animation-play-state: paused;
+          &.active{
+            animation-play-state: running;
+          }
         }
 
         .player-title {
@@ -140,6 +147,15 @@
           @include bg_img('../../assets/images/list')
         }
       }
+    }
+  }
+
+  @keyframes sport {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
     }
   }
 </style>
