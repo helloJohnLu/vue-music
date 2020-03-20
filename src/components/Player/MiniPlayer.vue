@@ -1,23 +1,31 @@
 <template>
-  <div class="mini-player" v-show="this.isShowMiniPlayer">
-    <div class="player-wrapper">
-      <div class="player-left" @click="showNormalPlayer">
-        <img src="http://p4.music.126.net/ysEtllS9g67Dwb4fhwMh8w==/109951164795032738.jpg" alt="">
-        <div class="player-title">
-          <h3>歌手</h3>
-          <p>歌手名</p>
+  <transition
+    :css="false"
+    @enter="enter"
+    @leave="leave"
+  >
+    <div class="mini-player" v-show="this.isShowMiniPlayer">
+      <div class="player-wrapper">
+        <div class="player-left" @click="showNormalPlayer">
+          <img src="http://p4.music.126.net/ysEtllS9g67Dwb4fhwMh8w==/109951164795032738.jpg" alt="">
+          <div class="player-title">
+            <h3>歌手</h3>
+            <p>歌手名</p>
+          </div>
+        </div>
+        <div class="player-right">
+          <div class="play"></div>
+          <div class="list" @click.stop="showList"></div>
         </div>
       </div>
-      <div class="player-right">
-        <div class="play"></div>
-        <div class="list" @click.stop="showList"></div>
-      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
   import {mapActions, mapGetters} from "vuex";
+  import Velocity from "velocity-animate";
+  import 'velocity-animate/velocity.ui';
 
   export default {
     name: "MiniPlayer",
@@ -37,6 +45,13 @@
       showNormalPlayer() {
         this.setFullScreen(true);
         this.setMiniPlayer(false);
+      },
+      // 界面切换动效
+      enter(el, done) {
+        Velocity(el, 'transition.slideUpIn', {duration: 500}, () => done());
+      },
+      leave(el, done) {
+        Velocity(el, 'transition.slideDownOut', {duration: 500}, () => done());
       }
     }
   }

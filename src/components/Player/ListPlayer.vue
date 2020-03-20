@@ -1,40 +1,48 @@
 <template>
-  <div class="list-player" v-show="isShow">
-    <div class="player-wrapper">
-      <div class="player-top">
-        <div class="top-left">
-          <div class="mode"></div>
-          <p>顺序播放</p>
+  <transition
+    :css="false"
+    @enter="enter"
+    @leave="leave"
+  >
+    <div class="list-player" v-show="isShow">
+      <div class="player-wrapper">
+        <div class="player-top">
+          <div class="top-left">
+            <div class="mode"></div>
+            <p>顺序播放</p>
+          </div>
+          <div class="top-right">
+            <div class="del"></div>
+          </div>
         </div>
-        <div class="top-right">
-          <div class="del"></div>
+        <div class="player-middle">
+          <ScrollView>
+            <ul>
+              <li class="item">
+                <div class="item-left">
+                  <div class="item-play"></div>
+                  <p>歌手</p>
+                </div>
+                <div class="item-right">
+                  <div class="item-favorite"></div>
+                  <div class="item-del"></div>
+                </div>
+              </li>
+            </ul>
+          </ScrollView>
         </div>
-      </div>
-      <div class="player-middle">
-        <ScrollView>
-          <ul>
-            <li class="item">
-              <div class="item-left">
-                <div class="item-play"></div>
-                <p>歌手</p>
-              </div>
-              <div class="item-right">
-                <div class="item-favorite"></div>
-                <div class="item-del"></div>
-              </div>
-            </li>
-          </ul>
-        </ScrollView>
-      </div>
-      <div class="player-bottom">
-        <p @click.top="hidden">关闭</p>
+        <div class="player-bottom">
+          <p @click.top="hidden">关闭</p>
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
   import ScrollView from "../ScrollView";
+  import Velocity from "velocity-animate";
+  import 'velocity-animate/velocity.ui';
 
   export default {
     name: "ListPlayer",
@@ -52,6 +60,13 @@
       },
       hidden() {
         this.isShow = false;
+      },
+      // 界面切换动效
+      enter(el, done) {
+        Velocity(el, 'transition.slideUpIn', {duration: 500}, () => done());
+      },
+      leave(el, done) {
+        Velocity(el, 'transition.slideDownOut', {duration: 500}, () => done());
       }
     }
   }
