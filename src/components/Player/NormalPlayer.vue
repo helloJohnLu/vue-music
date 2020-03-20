@@ -11,7 +11,7 @@
         <PlayerBottom></PlayerBottom>
       </div>
       <div class="player-bg">
-        <img src="http://p4.music.126.net/ysEtllS9g67Dwb4fhwMh8w==/109951164795032738.jpg" alt="">
+        <img :src="currentSong.picUrl" alt="">
       </div>
     </div>
   </transition>
@@ -34,7 +34,8 @@
     },
     computed: {
       ...mapGetters([
-        'isFullScreen'
+        'isFullScreen',
+        'currentSong'
       ])
     },
     methods: {

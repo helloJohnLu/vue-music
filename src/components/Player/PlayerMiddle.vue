@@ -3,7 +3,7 @@
     <!-- slides -->
     <swiper-slide class="cd">
       <div class="cd-wrapper" ref="cdWrapper">
-        <img src="http://p4.music.126.net/ysEtllS9g67Dwb4fhwMh8w==/109951164795032738.jpg" alt="">
+        <img :src="currentSong.picUrl" alt="">
       </div>
       <p>歌曲名歌曲名歌曲名歌曲名</p>
     </swiper-slide>
@@ -98,7 +98,7 @@
       }
     },
     computed: {
-      ...mapGetters(['isPlaying'])
+      ...mapGetters(['isPlaying', 'currentSong'])
     },
     watch: {
       isPlaying(newValue, oldValue) {
@@ -122,7 +122,7 @@
     bottom: 250px;
     left: 0;
     right: 0;
-    background-color: lightblue;
+    /*background-color: lightblue;*/
 
     .cd {
       .cd-wrapper {

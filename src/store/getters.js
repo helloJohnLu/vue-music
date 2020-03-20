@@ -18,6 +18,14 @@ export default {
     return state.modeType;
   },
   currentSong(state) {
-    return state.songs[state.currentIndex];
+    let obj = {
+      name: '',
+      singer: '',
+      picUrl: null
+    };
+    if (state.songs.length !== 0) {
+      obj = state.songs[state.currentIndex];
+    }
+    return obj;
   }
 }
