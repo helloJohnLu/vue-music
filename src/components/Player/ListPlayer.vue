@@ -8,8 +8,10 @@
       <div class="player-wrapper">
         <div class="player-top">
           <div class="top-left">
-            <div class="mode"></div>
-            <p>顺序播放</p>
+            <div class="mode loop" @click="setMode" ref="mode"></div>
+            <p v-if="modeType === 0">顺序播放</p>
+            <p v-else-if="modeType === 1">单曲播放</p>
+            <p v-else="modeType">随机播放</p>
           </div>
           <div class="top-right">
             <div class="del"></div>
@@ -64,6 +66,7 @@
   import Velocity from "velocity-animate";
   import 'velocity-animate/velocity.ui';
   import {mapGetters, mapActions} from "vuex";
+  import mode from "../../store/modeType";
 
   export default {
     name: "ListPlayer",
@@ -76,7 +79,7 @@
       }
     },
     computed: {
-      ...mapGetters(['isPlaying'])
+      ...mapGetters(['isPlaying', 'modeType'])
     },
     methods: {
       show() {
@@ -92,10 +95,21 @@
       leave(el, done) {
         Velocity(el, 'transition.slideDownOut', {duration: 500}, () => done());
       },
-      ...mapActions(['setIsPlaying']),
+      ...mapActions(['setIsPlaying', 'setModeType']),
       // 播放按钮的切换
       play() {
         this.setIsPlaying(!this.isPlaying);
+      },
+      // 播放模式切换
+      setMode() {
+        // 切换播放模式
+        if (this.modeType === mode.loop) {
+          this.setModeType(mode.one);
+        } else if (this.modeType === mode.one) {
+          this.setModeType(mode.random);
+        } else if (this.modeType === mode.random) {
+          this.setModeType(mode.loop);
+        }
       }
     },
     watch: {
@@ -104,6 +118,18 @@
           this.$refs.play.classList.add('active');
         } else {
           this.$refs.play.classList.remove('active');
+        }
+      },
+      modeType(newValue, oldValue) {
+        if (newValue === mode.loop) {
+          this.$refs.mode.classList.remove('random');
+          this.$refs.mode.classList.add('loop');
+        } else if (newValue === mode.one) {
+          this.$refs.mode.classList.remove('loop');
+          this.$refs.mode.classList.add('one');
+        } else if (newValue === mode.random) {
+          this.$refs.mode.classList.remove('one');
+          this.$refs.mode.classList.add('random')
         }
       }
     }
@@ -138,7 +164,18 @@
             width: 56px;
             height: 56px;
             margin-right: 20px;
-            @include bg_img('../../assets/images/small_loop');
+
+            &.loop {
+              @include bg_img('../../assets/images/small_loop');
+            }
+
+            &.one {
+              @include bg_img('../../assets/images/small_one');
+            }
+
+            &.random {
+              @include bg_img('../../assets/images/small_shuffle');
+            }
           }
 
           p {
