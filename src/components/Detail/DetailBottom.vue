@@ -25,11 +25,13 @@
     },
     methods: {
       ...mapActions([
-        'setFullScreen'
+        'setFullScreen',
+        'setMiniPlayer'
       ]),
       selectMusic() {
         // this.$store.dispatch('selectMusic', true);
         this.setFullScreen(true);
+        this.setMiniPlayer(false);
       }
     }
   }

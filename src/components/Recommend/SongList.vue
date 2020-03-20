@@ -30,10 +30,12 @@
     },
     methods: {
       ...mapActions([
-        'setFullScreen'
+        'setFullScreen',
+        'setMiniPlayer'
       ]),
       selectMusic() {
         this.setFullScreen(true);
+        this.setMiniPlayer(false);
       }
     }
   }
