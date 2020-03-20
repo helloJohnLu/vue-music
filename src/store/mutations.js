@@ -3,7 +3,8 @@ import {
   SET_MINI_PLAYER,
   SET_LIST_PLAYER,
   SET_IS_PLAYING,
-  SET_MODE_TYPE
+  SET_MODE_TYPE,
+  SET_SONG_DETAIL
 } from "./mutations-type";
 
 
@@ -28,5 +29,8 @@ export default {
   },
   [SET_MODE_TYPE](state, flag) {
     state.modeType = flag;
+  },
+  [SET_SONG_DETAIL](state, list) {
+    state.songs = list;
   }
 }

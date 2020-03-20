@@ -13,5 +13,11 @@ export default {
   },
   modeType(state) {
     return state.modeType;
+  },
+  songs(state) {
+    return state.modeType;
+  },
+  currentSong(state) {
+    return state.songs[state.currentIndex];
   }
 }

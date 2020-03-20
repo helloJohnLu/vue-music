@@ -4,7 +4,7 @@
       <div class="bottom-icon"></div>
       <div class="bottom-title">播放全部</div>
     </li>
-    <li v-for="value in playlist" :key="playlist.id" class="item" @click="selectMusic">
+    <li v-for="value in playlist" :key="playlist.id" class="item" @click="selectMusic(value.id)">
       <h3>{{value.name}}</h3>
       <p>{{value.al.name}} —— {{value.ar[0].name}}</p>
     </li>
@@ -26,12 +26,12 @@
     methods: {
       ...mapActions([
         'setFullScreen',
-        'setMiniPlayer'
+        'setSongDetail'
       ]),
-      selectMusic() {
+      selectMusic(id) {
         // this.$store.dispatch('selectMusic', true);
         this.setFullScreen(true);
-        this.setMiniPlayer(false);
+        this.setSongDetail([id]);  // [id] 之所以是数组因为 acitons.js 中的 ids 使用了 join 方法
       }
     }
   }
