@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="player-right">
-          <div class="play"></div>
+          <div class="play" @click="play" ref="play"></div>
           <div class="list" @click.stop="showList"></div>
         </div>
       </div>
@@ -31,13 +31,15 @@
     name: "MiniPlayer",
     computed: {
       ...mapGetters([
-        'isShowMiniPlayer'
+        'isShowMiniPlayer',
+        'isPlaying'
       ])
     },
     methods: {
       ...mapActions([
         'setFullScreen',
-        'setMiniPlayer'
+        'setMiniPlayer',
+        'setIsPlaying'
       ]),
       showList() {
         this.$emit('showList');
@@ -52,6 +54,19 @@
       },
       leave(el, done) {
         Velocity(el, 'transition.slideDownOut', {duration: 500}, () => done());
+      },
+      // 播放按钮切换
+      play() {
+        this.setIsPlaying(!this.isPlaying);
+      }
+    },
+    watch: {
+      isPlaying(newValue, oldValue) {
+        if (newValue) {
+          this.$refs.play.classList.add('active');
+        } else {
+          this.$refs.play.classList.remove('active');
+        }
       }
     }
   }
@@ -112,7 +127,11 @@
         .play {
           width: 84px;
           height: 84px;
-          @include bg_img('../../assets/images/pause')
+          @include bg_img('../../assets/images/pause');
+
+          &.active {
+            @include bg_img('../../assets/images/play');
+          }
         }
 
         .list {

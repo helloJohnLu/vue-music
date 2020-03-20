@@ -28,6 +28,26 @@
                   <div class="item-del"></div>
                 </div>
               </li>
+              <li class="item">
+                <div class="item-left">
+                  <div class="item-play"></div>
+                  <p>歌手</p>
+                </div>
+                <div class="item-right">
+                  <div class="item-favorite"></div>
+                  <div class="item-del"></div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="item-left">
+                  <div class="item-play" @click="play" ref="play"></div>
+                  <p>歌手</p>
+                </div>
+                <div class="item-right">
+                  <div class="item-favorite"></div>
+                  <div class="item-del"></div>
+                </div>
+              </li>
             </ul>
           </ScrollView>
         </div>
@@ -43,6 +63,7 @@
   import ScrollView from "../ScrollView";
   import Velocity from "velocity-animate";
   import 'velocity-animate/velocity.ui';
+  import {mapGetters, mapActions} from "vuex";
 
   export default {
     name: "ListPlayer",
@@ -53,6 +74,9 @@
       return {
         isShow: false
       }
+    },
+    computed: {
+      ...mapGetters(['isPlaying'])
     },
     methods: {
       show() {
@@ -67,6 +91,20 @@
       },
       leave(el, done) {
         Velocity(el, 'transition.slideDownOut', {duration: 500}, () => done());
+      },
+      ...mapActions(['setIsPlaying']),
+      // 播放按钮的切换
+      play() {
+        this.setIsPlaying(!this.isPlaying);
+      }
+    },
+    watch: {
+      isPlaying(newValue, oldValue) {
+        if (newValue) {
+          this.$refs.play.classList.add('active');
+        } else {
+          this.$refs.play.classList.remove('active');
+        }
       }
     }
   }
@@ -137,6 +175,10 @@
               height: 56px;
               @include bg_img('../../assets/images/small_pause');
               margin-right: 20px;
+
+              &.active {
+                @include bg_img('../../assets/images/small_play');
+              }
             }
 
             p {
