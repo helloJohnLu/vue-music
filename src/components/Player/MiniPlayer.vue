@@ -112,7 +112,7 @@
         .play {
           width: 84px;
           height: 84px;
-          @include bg_img('../../assets/images/play')
+          @include bg_img('../../assets/images/pause')
         }
 
         .list {

@@ -135,7 +135,7 @@
             .item-play {
               width: 56px;
               height: 56px;
-              @include bg_img('../../assets/images/small_play');
+              @include bg_img('../../assets/images/small_pause');
               margin-right: 20px;
             }
 
