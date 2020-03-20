@@ -1,6 +1,6 @@
 <template>
-  <div class="header" @click="switchTheme">
-    <div class="header-left" @click.stop="goBack"></div>
+  <div class="header">
+    <div class="header-left" @click="hiddenNormalPlayer"></div>
     <div class="header-title">
       <h3>歌手</h3>
       <p>牛牛</p>
@@ -10,31 +10,16 @@
 </template>
 
 <script>
+  import {mapActions} from "vuex";
+
   export default {
     name: "PlayHeader",
-    props: {
-      title: {
-        type: String,
-        default: '',
-        // required: true
-      }
-    },
-    data() {
-      return {
-        themes: ['red', 'green', 'night'],
-        index: 0
-      }
-    },
     methods: {
-      switchTheme() {
-        this.index++;
-        if (this.index >= this.themes.length) {
-          this.index = 0;
-        }
-        document.documentElement.setAttribute('data-theme', this.themes[this.index]);
-      },
-      goBack() {
-        window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
+      ...mapActions([
+        'setFullScreen'
+      ]),
+      hiddenNormalPlayer() {
+        this.setFullScreen(false);
       }
     }
   }
