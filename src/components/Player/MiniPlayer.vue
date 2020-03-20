@@ -102,7 +102,7 @@
           height: 100px;
           border-radius: 50%;
           margin-right: 20px;
-          animation: sport 20s linear infinite;
+          animation: sport 10s linear infinite;
           animation-play-state: paused;
           &.active{
             animation-play-state: running;

@@ -133,7 +133,7 @@
         border-radius: 50%;
         border: 10px solid #fff;
         overflow: hidden;
-        animation: sport 20s linear infinite;
+        animation: sport 10s linear infinite;
         animation-play-state: paused;
         &.active{
           animation-play-state: running;
