@@ -2,8 +2,8 @@
   <swiper :options="swiperOption" class="banner">
     <!-- slides -->
     <swiper-slide class="cd">
-      <div class="cd-wrapper">
-        <img src="" alt="">
+      <div class="cd-wrapper" ref="cdWrapper">
+        <img src="http://p4.music.126.net/ysEtllS9g67Dwb4fhwMh8w==/109951164795032738.jpg" alt="">
       </div>
       <p>歌曲名歌曲名歌曲名歌曲名</p>
     </swiper-slide>
@@ -72,6 +72,7 @@
   import 'swiper/dist/css/swiper.css'
   import {swiper, swiperSlide} from 'vue-awesome-swiper'
   import ScrollView from "../ScrollView";
+  import {mapGetters} from "vuex";
 
   export default {
     name: "PlayerMiddle",
@@ -93,9 +94,21 @@
           observer: true,
           observeParents: true,
           observeSlideChildren: true
-        }
+        },
       }
     },
+    computed: {
+      ...mapGetters(['isPlaying'])
+    },
+    watch: {
+      isPlaying(newValue, oldValue) {
+        if (newValue) {
+          this.$refs.cdWrapper.classList.add('active');
+        } else {
+          this.$refs.cdWrapper.classList.remove('active');
+        }
+      }
+    }
   }
 </script>
 
@@ -120,6 +133,11 @@
         border-radius: 50%;
         border: 10px solid #fff;
         overflow: hidden;
+        animation: sport 20s linear infinite;
+        animation-play-state: paused;
+        &.active{
+          animation-play-state: running;
+        }
 
         img {
           width: 100%;
@@ -145,6 +163,15 @@
           padding-bottom: 100px;
         }
       }
+    }
+  }
+  
+  @keyframes sport {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
     }
   }
 </style>
