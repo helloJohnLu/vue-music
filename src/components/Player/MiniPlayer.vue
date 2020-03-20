@@ -32,18 +32,21 @@
     computed: {
       ...mapGetters([
         'isShowMiniPlayer',
-        'isPlaying'
+        'isPlaying',
       ])
     },
     methods: {
       ...mapActions([
         'setFullScreen',
         'setMiniPlayer',
+        'setListPlayer',
         'setIsPlaying'
       ]),
+      // 点击弹出列表播放界面
       showList() {
-        this.$emit('showList');
+        this.setListPlayer(true);
       },
+      // 点击切换到默认播放界面
       showNormalPlayer() {
         this.setFullScreen(true);
         this.setMiniPlayer(false);

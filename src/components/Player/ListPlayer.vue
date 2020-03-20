@@ -4,7 +4,7 @@
     @enter="enter"
     @leave="leave"
   >
-    <div class="list-player" v-show="isShow">
+    <div class="list-player" v-show="isShowListPlayer">
       <div class="player-wrapper">
         <div class="player-top">
           <div class="top-left">
@@ -73,20 +73,14 @@
     components: {
       ScrollView
     },
-    data: function () {
-      return {
-        isShow: false
-      }
-    },
     computed: {
-      ...mapGetters(['isPlaying', 'modeType'])
+      ...mapGetters(['isPlaying', 'modeType', 'isShowListPlayer'])
     },
     methods: {
-      show() {
-        this.isShow = true;
-      },
+      ...mapActions(['setIsPlaying', 'setModeType', 'setListPlayer']),
+      // 点击淡出列表播放界面
       hidden() {
-        this.isShow = false;
+        this.setListPlayer(false);
       },
       // 界面切换动效
       enter(el, done) {
@@ -95,7 +89,6 @@
       leave(el, done) {
         Velocity(el, 'transition.slideDownOut', {duration: 500}, () => done());
       },
-      ...mapActions(['setIsPlaying', 'setModeType']),
       // 播放按钮的切换
       play() {
         this.setIsPlaying(!this.isPlaying);
