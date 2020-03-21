@@ -19,10 +19,10 @@
         </div>
         <div class="player-middle">
           <ScrollView ref="scrollView">
-            <ul>
+            <ul ref="play">
               <li class="item" v-for="(value, index) in songs" :key="value.id">
                 <div class="item-left">
-                  <div class="item-play" @click="play" ref="play"></div>
+                  <div class="item-play" @click="play" v-show="currentIndex === index"></div>
                   <p>{{value.name}}</p>
                 </div>
                 <div class="item-right">
@@ -58,7 +58,8 @@
         'isPlaying',
         'modeType',
         'isShowListPlayer',
-        'songs'
+        'songs',
+        'currentIndex'
       ])
     },
     methods: {
@@ -194,6 +195,16 @@
         height: 700px;
         overflow: hidden;
 
+        ul {
+          &.active {
+            .item {
+              .item-play {
+                @include bg_img('../../assets/images/small_pause');
+              }
+            }
+          }
+        }
+
         .item {
           height: 100px;
           border-top: 1px solid #ccc;
@@ -212,10 +223,6 @@
               height: 56px;
               @include bg_img('../../assets/images/small_play');
               margin-right: 20px;
-
-              &.active {
-                @include bg_img('../../assets/images/small_pause');
-              }
             }
 
             p {
