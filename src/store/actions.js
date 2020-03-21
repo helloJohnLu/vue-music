@@ -38,6 +38,7 @@ export default {
     result.songs.forEach(value => {
       let obj = {};
       obj.name = value.name;
+      obj.id = value.id;
       let singer = '';
       value['ar'].forEach((item, index) => {
         if (index === 0) {  // 如果只有一位歌手
