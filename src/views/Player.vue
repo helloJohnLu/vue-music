@@ -3,7 +3,7 @@
     <NormalPlayer></NormalPlayer>
     <MiniPlayer></MiniPlayer>
     <ListPlayer ref="listPlayer"></ListPlayer>
-    <audio :src="this.currentSong.url"></audio>
+    <audio :src="this.currentSong.url" ref="audio"></audio>
   </div>
 </template>
 
@@ -22,8 +22,30 @@
     },
     computed: {
       ...mapGetters([
-        'currentSong'
+        'currentSong',
+        'isPlaying',
+        'currentIndex'
       ])
+    },
+    watch: {
+      // 播放按钮 播放/暂停
+      isPlaying(newValue, oldValue) {
+        if (newValue) {
+          this.$refs.audio.play();
+        } else {
+          this.$refs.audio.pause();
+        }
+      },
+      // 监听歌曲切换
+      currentIndex(newValue, oldValue) {
+        this.$refs.audio.oncanplay = () => {
+          if (this.isPlaying) {
+            this.$refs.audio.play();
+          } else {
+            this.$refs.audio.pause();
+          }
+        }
+      }
     }
   }
 </script>
