@@ -7,10 +7,10 @@
     <div class="mini-player" v-show="this.isShowMiniPlayer">
       <div class="player-wrapper">
         <div class="player-left" @click="showNormalPlayer">
-          <img src="http://p4.music.126.net/ysEtllS9g67Dwb4fhwMh8w==/109951164795032738.jpg" ref="cd" alt="">
+          <img :src="currentSong.picUrl" ref="cd" alt="">
           <div class="player-title">
-            <h3>歌手</h3>
-            <p>歌手名</p>
+            <h3>{{currentSong.name}}</h3>
+            <p>{{currentSong.singer}}</p>
           </div>
         </div>
         <div class="player-right">
@@ -33,6 +33,7 @@
       ...mapGetters([
         'isShowMiniPlayer',
         'isPlaying',
+        'currentSong'
       ])
     },
     methods: {
@@ -115,7 +116,7 @@
         .player-title {
           display: flex;
           flex-direction: column;
-          align-items: center;
+          /*align-items: center;*/
           justify-content: center;
 
           h3 {
