@@ -4,7 +4,8 @@ import {
   SET_LIST_PLAYER,
   SET_IS_PLAYING,
   SET_MODE_TYPE,
-  SET_SONG_DETAIL
+  SET_SONG_DETAIL,
+  SET_SONG_LYRIC
 } from "./mutations-type";
 
 
@@ -32,5 +33,8 @@ export default {
   },
   [SET_SONG_DETAIL](state, list) {
     state.songs = list;
+  },
+  [SET_SONG_LYRIC](state, lyric) {
+    state.currentLyric = lyric;
   }
 }

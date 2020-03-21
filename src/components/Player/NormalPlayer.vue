@@ -21,7 +21,7 @@
   import PlayHeader from "./PlayHeader";
   import PlayerMiddle from "./PlayerMiddle";
   import PlayerBottom from "./PlayerBottom";
-  import {mapGetters} from "vuex";
+  import {mapGetters, mapActions} from "vuex";
   import Velocity from "velocity-animate";
   import 'velocity-animate/velocity.ui';
 
@@ -39,11 +39,19 @@
       ])
     },
     methods: {
+      ...mapActions([
+        'setSongLyric'
+      ]),
       enter(el, done) {
         Velocity(el, 'transition.slideRightIn', {duration: 500}, () => done());
       },
       leave(el, done) {
         Velocity(el, 'transition.slideRightOut', {duration: 500}, () => done());
+      }
+    },
+    watch: {
+      currentSong(newValue, oldValue) {
+        this.setSongLyric(newValue.id);
       }
     }
   }

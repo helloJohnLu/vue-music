@@ -4,9 +4,10 @@ import {
   SET_LIST_PLAYER,
   SET_IS_PLAYING,
   SET_MODE_TYPE,
-  SET_SONG_DETAIL
+  SET_SONG_DETAIL,
+  SET_SONG_LYRIC
 } from "./mutations-type";
-import {getSongDetail} from "../api/index";
+import {getSongDetail, getSongLyric} from "../api/index";
 
 
 export default {
@@ -52,5 +53,10 @@ export default {
       list.push(obj);
     });
     commit(SET_SONG_DETAIL, list);
+  },
+  async setSongLyric({commit}, id) {
+    let result = await getSongLyric({id: id});
+    console.log(result.lrc.lyric);
+    commit(SET_SONG_LYRIC, result);
   }
 }

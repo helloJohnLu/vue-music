@@ -9,4 +9,5 @@ export default {
   songs: [],
   currentIndex: 0,
   currentSong: {},
+  currentLyric: {}
 }
