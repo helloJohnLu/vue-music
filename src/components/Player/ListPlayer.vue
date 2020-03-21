@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="player-middle">
-          <ScrollView>
+          <ScrollView ref="scrollView">
             <ul>
               <li class="item" v-for="value in songs" :key="value.id">
                 <div class="item-left">
@@ -103,6 +103,12 @@
         } else if (newValue === mode.random) {
           this.$refs.mode.classList.remove('one');
           this.$refs.mode.classList.add('random')
+        }
+      },
+      // 重新计算高度
+      isShowListPlayer(newValue, oldValue) {
+        if (newValue) {
+          this.$refs.scrollView.refresh();
         }
       }
     }
