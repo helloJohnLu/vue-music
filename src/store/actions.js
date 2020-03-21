@@ -5,10 +5,10 @@ import {
   SET_IS_PLAYING,
   SET_MODE_TYPE,
   SET_SONG_DETAIL,
-  SET_SONG_LYRIC
+  SET_SONG_LYRIC,
+  DELETE_SONG
 } from "./mutations-type";
 import {getSongDetail, getSongLyric, getSongUrl} from "../api/index";
-
 
 export default {
   /*
@@ -63,6 +63,10 @@ export default {
     let obj = parseLyric(result.lrc.lyric);
     // console.log(obj);
     commit(SET_SONG_LYRIC, obj);
+  },
+  // 删除歌曲
+  deleteSong({commit}, index) {
+    commit(DELETE_SONG, index);
   }
 }
 

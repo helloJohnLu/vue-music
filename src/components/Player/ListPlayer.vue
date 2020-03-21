@@ -20,14 +20,14 @@
         <div class="player-middle">
           <ScrollView ref="scrollView">
             <ul>
-              <li class="item" v-for="value in songs" :key="value.id">
+              <li class="item" v-for="(value, index) in songs" :key="value.id">
                 <div class="item-left">
                   <div class="item-play" @click="play" ref="play"></div>
                   <p>{{value.name}}</p>
                 </div>
                 <div class="item-right">
                   <div class="item-favorite"></div>
-                  <div class="item-del"></div>
+                  <div class="item-del" @click="del(index)"></div>
                 </div>
               </li>
             </ul>
@@ -54,10 +54,20 @@
       ScrollView
     },
     computed: {
-      ...mapGetters(['isPlaying', 'modeType', 'isShowListPlayer', 'songs'])
+      ...mapGetters([
+        'isPlaying',
+        'modeType',
+        'isShowListPlayer',
+        'songs'
+      ])
     },
     methods: {
-      ...mapActions(['setIsPlaying', 'setModeType', 'setListPlayer']),
+      ...mapActions([
+        'setIsPlaying',
+        'setModeType',
+        'setListPlayer',
+        'deleteSong'
+      ]),
       // 点击淡出列表播放界面
       hidden() {
         this.setListPlayer(false);
@@ -83,6 +93,10 @@
         } else if (this.modeType === mode.random) {
           this.setModeType(mode.loop);
         }
+      },
+      // 删除歌曲
+      del(index) {
+        this.deleteSong(index);
       }
     },
     watch: {
