@@ -1,6 +1,6 @@
 <template>
   <ul class="detail-bottom">
-    <li class="bottom-top">
+    <li class="bottom-top" @click="selectAllMusic">
       <div class="bottom-icon"></div>
       <div class="bottom-title">播放全部</div>
     </li>
@@ -32,6 +32,13 @@
         // this.$store.dispatch('selectMusic', true);
         this.setFullScreen(true);
         this.setSongDetail([id]);  // [id] 之所以是数组因为 acitons.js 中的 ids 使用了 join 方法
+      },
+      // 播放全部
+      selectAllMusic() {
+        this.setFullScreen(true);
+        let ids = this.playlist.map(item => item.id);
+        console.log(ids);
+        this.setSongDetail(ids);
       }
     }
   }
