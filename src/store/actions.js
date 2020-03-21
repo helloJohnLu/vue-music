@@ -56,7 +56,54 @@ export default {
   },
   async setSongLyric({commit}, id) {
     let result = await getSongLyric({id: id});
-    console.log(result.lrc.lyric);
+    // console.log(result.lrc.lyric);
+    parseLyric(result.lrc.lyric);
     commit(SET_SONG_LYRIC, result);
   }
+}
+
+// 格式化歌词
+function parseLyric(lrc) {
+  // 用换行符进行分割
+  let lyrics = lrc.split('\n');
+
+  // [00:00.000] 作曲 : 阿沁
+  // 1. 定义正则表达式提取时间：[00:00.000]
+  let reg_getTime = /\[\d*:\d*.\d*\]/g;
+
+  // 2. 定义正则表达式提取分钟：[00
+  let reg_getMin = /\[\d*/i;
+
+  // 3. 定义正则表达式提取秒钟：00
+  let reg_getSecond = /\:\d*/i;
+
+  // 4. 定义一个对象保存处理好的歌词
+  let lyricObj = {};
+
+  lyrics.forEach(lyric => {
+    // 1). 提取时间
+    let timeStr = lyric.match(reg_getTime);
+    if (!timeStr) {
+      return;
+    }
+    timeStr = timeStr[0];
+
+    // 2). 提取分钟
+    let minStr = timeStr.match(reg_getMin)[0].substr(1);
+
+    // 3). 提取秒钟
+    let secondStr = timeStr.match(reg_getSecond)[0].substr(1);
+
+    // 4). 合并时间，将分钟和秒钟都合并为秒钟
+    let time = parseInt(minStr) * 60 + parseInt(secondStr);
+
+    // 5). 处理歌词
+    let text = lyric.replace(reg_getTime, '').trim();  // 去掉时间
+
+    // 6). 保存歌词
+    lyricObj[time] = text;
+  });
+
+  // console.log(lyricObj);
+  return lyricObj;
 }
