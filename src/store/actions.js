@@ -6,7 +6,8 @@ import {
   SET_MODE_TYPE,
   SET_SONG_DETAIL,
   SET_SONG_LYRIC,
-  DELETE_SONG
+  DELETE_SONG,
+  SET_SONG_SELECT
 } from "./mutations-type";
 import {getSongDetail, getSongLyric, getSongUrl} from "../api/index";
 
@@ -67,6 +68,10 @@ export default {
   // 删除歌曲
   deleteSong({commit}, index) {
     commit(DELETE_SONG, index);
+  },
+  // 列表播放界面点选播放歌曲
+  setSelectSong({commit}, index) {
+    commit(SET_SONG_SELECT, index);
   }
 }
 

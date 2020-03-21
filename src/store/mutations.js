@@ -6,7 +6,8 @@ import {
   SET_MODE_TYPE,
   SET_SONG_DETAIL,
   SET_SONG_LYRIC,
-  DELETE_SONG
+  DELETE_SONG,
+  SET_SONG_SELECT
 } from "./mutations-type";
 
 export default {
@@ -52,11 +53,21 @@ export default {
     } else {
       state.songs = [];  // 删除全部歌曲
     }
+
+    // 解决删除歌曲时索引 bug
+    if (index < state.currentIndex) {
+      state.currentIndex -= 1;
+    }
+
     // 如果是删除全部歌曲，需要关闭所有的播放器界面
     if (state.songs.length === 0) {
       state.isFullScreen = false;
       state.isShowMiniPlayer = false;
       state.isShowListPlayer = false;
     }
+  },
+  // 列表播放界面，点选播放歌曲
+  [SET_SONG_SELECT](state, index) {
+    state.currentIndex = index;
   }
 }
