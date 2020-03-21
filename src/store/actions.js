@@ -7,7 +7,7 @@ import {
   SET_SONG_DETAIL,
   SET_SONG_LYRIC
 } from "./mutations-type";
-import {getSongDetail, getSongLyric} from "../api/index";
+import {getSongDetail, getSongLyric, getSongUrl} from "../api/index";
 
 
 export default {
@@ -34,10 +34,13 @@ export default {
   },
   async setSongDetail({commit}, ids) {
     let result = await getSongDetail({ids: ids.join(',')});
+    let urls = await getSongUrl({id: ids.join(',')});
+    // console.log(urls.data[0].url);
     // console.log(result);
     let list = [];
-    result.songs.forEach(value => {
+    result.songs.forEach((value, i) => {
       let obj = {};
+      obj.url = urls.data[i].url;
       obj.name = value.name;
       obj.id = value.id;
       let singer = '';
@@ -58,7 +61,7 @@ export default {
     let result = await getSongLyric({id: id});
     // console.log(result.lrc.lyric);
     let obj = parseLyric(result.lrc.lyric);
-    console.log(obj);
+    // console.log(obj);
     commit(SET_SONG_LYRIC, obj);
   }
 }
