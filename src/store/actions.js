@@ -57,8 +57,9 @@ export default {
   async setSongLyric({commit}, id) {
     let result = await getSongLyric({id: id});
     // console.log(result.lrc.lyric);
-    parseLyric(result.lrc.lyric);
-    commit(SET_SONG_LYRIC, result);
+    let obj = parseLyric(result.lrc.lyric);
+    console.log(obj);
+    commit(SET_SONG_LYRIC, obj);
   }
 }
 
