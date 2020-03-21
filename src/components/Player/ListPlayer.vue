@@ -14,7 +14,7 @@
             <p v-else="modeType">随机播放</p>
           </div>
           <div class="top-right">
-            <div class="del"></div>
+            <div class="del" @click="delAll"></div>
           </div>
         </div>
         <div class="player-middle">
@@ -97,6 +97,10 @@
       // 删除歌曲
       del(index) {
         this.deleteSong(index);
+      },
+      // 删除全部歌曲
+      delAll() {
+        this.deleteSong();
       }
     },
     watch: {

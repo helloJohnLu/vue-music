@@ -18,9 +18,17 @@ export default {
 
   [SET_FULL_SCREEN](state, flag) {
     state.isFullScreen = flag;
+    if (flag) {
+      state.isShowListPlayer = false;
+      state.isShowMiniPlayer = false;
+    }
   },
   [SET_MINI_PLAYER](state, flag) {
     state.isShowMiniPlayer = flag;
+    if (flag) {
+      state.isShowListPlayer = false;
+      state.isFullScreen = false;
+    }
   },
   [SET_LIST_PLAYER](state, flag) {
     state.isShowListPlayer = flag;
@@ -39,6 +47,16 @@ export default {
   },
   // 删除歌曲
   [DELETE_SONG](state, index) {
-    state.songs.splice(index, 1);
+    if (index !== undefined) {
+      state.songs.splice(index, 1);  // 删除单首
+    } else {
+      state.songs = [];  // 删除全部歌曲
+    }
+    // 如果是删除全部歌曲，需要关闭所有的播放器界面
+    if (state.songs.length === 0) {
+      state.isFullScreen = false;
+      state.isShowMiniPlayer = false;
+      state.isShowListPlayer = false;
+    }
   }
 }
