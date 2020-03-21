@@ -15,7 +15,7 @@ export default {
     return state.modeType;
   },
   songs(state) {
-    return state.modeType;
+    return state.songs;
   },
   currentSong(state) {
     let obj = {

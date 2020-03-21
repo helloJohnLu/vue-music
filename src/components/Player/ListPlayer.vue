@@ -20,30 +20,10 @@
         <div class="player-middle">
           <ScrollView>
             <ul>
-              <li class="item">
-                <div class="item-left">
-                  <div class="item-play"></div>
-                  <p>歌手</p>
-                </div>
-                <div class="item-right">
-                  <div class="item-favorite"></div>
-                  <div class="item-del"></div>
-                </div>
-              </li>
-              <li class="item">
-                <div class="item-left">
-                  <div class="item-play"></div>
-                  <p>歌手</p>
-                </div>
-                <div class="item-right">
-                  <div class="item-favorite"></div>
-                  <div class="item-del"></div>
-                </div>
-              </li>
-              <li class="item">
+              <li class="item" v-for="value in songs" :key="value.id">
                 <div class="item-left">
                   <div class="item-play" @click="play" ref="play"></div>
-                  <p>歌手</p>
+                  <p>{{value.name}}</p>
                 </div>
                 <div class="item-right">
                   <div class="item-favorite"></div>
@@ -74,7 +54,7 @@
       ScrollView
     },
     computed: {
-      ...mapGetters(['isPlaying', 'modeType', 'isShowListPlayer'])
+      ...mapGetters(['isPlaying', 'modeType', 'isShowListPlayer', 'songs'])
     },
     methods: {
       ...mapActions(['setIsPlaying', 'setModeType', 'setListPlayer']),
@@ -187,6 +167,9 @@
       }
 
       .player-middle {
+        height: 700px;
+        overflow: hidden;
+
         .item {
           height: 100px;
           border-top: 1px solid #ccc;
