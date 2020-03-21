@@ -11,7 +11,7 @@
   import NormalPlayer from "../components/Player/NormalPlayer";
   import MiniPlayer from "../components/Player/MiniPlayer";
   import ListPlayer from "../components/Player/ListPlayer";
-  import {mapGetters} from "vuex";
+  import {mapGetters, mapActions} from "vuex";
 
   export default {
     name: "Play",
@@ -27,6 +27,9 @@
         'currentIndex'
       ])
     },
+    methods: {
+      ...mapActions(['setIsPlaying'])
+    },
     watch: {
       // 播放按钮 播放/暂停
       isPlaying(newValue, oldValue) {
@@ -37,12 +40,27 @@
         }
       },
       // 监听歌曲切换
+      /*
       currentIndex(newValue, oldValue) {
         this.$refs.audio.oncanplay = () => {
           if (this.isPlaying) {
             this.$refs.audio.play();
           } else {
             this.$refs.audio.pause();
+          }
+        }
+      }
+      */
+      // 监听歌曲切换 改进
+      currentSong(newValue, oldValue) {
+        if (newValue) {
+          this.setIsPlaying(true);
+          this.$refs.audio.oncanplay = () => {
+            if (this.isPlaying) {
+              this.$refs.audio.play();
+            } else {
+              this.$refs.audio.pause();
+            }
           }
         }
       }
