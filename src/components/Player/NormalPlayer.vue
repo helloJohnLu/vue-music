@@ -51,6 +51,10 @@
     },
     watch: {
       currentSong(newValue, oldValue) {
+        // 删除全部歌曲时，不请求数据
+        if (newValue.id === undefined) {
+          return;
+        }
         this.setSongLyric(newValue.id);
       }
     }
