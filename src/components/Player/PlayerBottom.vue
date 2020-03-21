@@ -11,9 +11,9 @@
     </div>
     <div class="bottom-control">
       <div class="mode loop" @click="setMode" ref="mode"></div>
-      <div class="prev"></div>
+      <div class="prev" @click="prev"></div>
       <div class="play" @click="play" ref="play"></div>
-      <div class="next"></div>
+      <div class="next" @click="next"></div>
       <div class="favorite"></div>
     </div>
   </div>
@@ -26,15 +26,24 @@
   export default {
     name: "PlayerBottom",
     computed: {
-      ...mapGetters(['isPlaying', 'modeType'])
+      ...mapGetters(['isPlaying', 'modeType', 'currentIndex'])
     },
     methods: {
       ...mapActions([
         'setIsPlaying',
-        'setModeType'
+        'setModeType',
+        'setSelectSong'
       ]),
       play() {
         this.setIsPlaying(!this.isPlaying);
+      },
+      // 切换到上一首
+      prev() {
+        this.setSelectSong(this.currentIndex - 1);
+      },
+      // 切换到下一首
+      next() {
+        this.setSelectSong(this.currentIndex + 1);
       },
       // 播放模式
       setMode() {

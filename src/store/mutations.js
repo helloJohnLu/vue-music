@@ -68,6 +68,12 @@ export default {
   },
   // 列表播放界面，点选播放歌曲
   [SET_SONG_SELECT](state, index) {
+    // 头尾处理
+    if (index < 0) {
+      index = state.songs.length - 1;
+    } else if (index > state.songs.length - 1) {
+      index = 0;
+    }
     state.currentIndex = index;
   }
 }
