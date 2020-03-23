@@ -1,9 +1,9 @@
 <template>
   <div class="player">
-    <NormalPlayer :songDuration="songDuration"></NormalPlayer>
+    <NormalPlayer :songDuration="songDuration" :currentTime="currentTime"></NormalPlayer>
     <MiniPlayer></MiniPlayer>
     <ListPlayer ref="listPlayer"></ListPlayer>
-    <audio :src="currentSong.url" ref="audio"></audio>
+    <audio :src="currentSong.url" ref="audio" @timeupdate="timeupdate"></audio>
   </div>
 </template>
 
@@ -43,6 +43,10 @@
           .catch(e => {
             // Video playback failed ;(
           })
+      },
+      // 播放歌曲进度，当前时间
+      timeupdate(e) {
+        this.currentTime = e.target.currentTime;
       }
     },
     watch: {
@@ -80,7 +84,8 @@
     },
     data: function () {
       return {
-        songDuration: 0
+        songDuration: 0,
+        currentTime: 0
       }
     },
     mounted() {

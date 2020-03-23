@@ -1,7 +1,7 @@
 <template>
   <div class="player-bottom">
     <div class="bottom-progress">
-      <span>0:00</span>
+      <span ref="showCurrentDuration">0:00</span>
       <div class="progress-bar">
         <div class="progress-line">
           <div class="progress-dot"></div>
@@ -27,6 +27,11 @@
     name: "PlayerBottom",
     props: {
       songDuration: {
+        type: Number,
+        default: 0,
+        required: true
+      },
+      currentTime: {
         type: Number,
         default: 0,
         required: true
@@ -102,9 +107,13 @@
           this.$refs.mode.classList.add('random')
         }
       },
-      songDuration() {
-        let songTime = this.formatSongTime(this.songDuration);
+      songDuration(newValue, oldValue) {
+        let songTime = this.formatSongTime(newValue);
         this.$refs.showSongDuration.innerHTML = songTime.minute + ':' + songTime.second;
+      },
+      currentTime(newValue, oldValue) {
+        let songTime = this.formatSongTime(newValue);
+        this.$refs.showCurrentDuration.innerHTML = songTime.minute + ':' + songTime.second;
       }
     }
   }

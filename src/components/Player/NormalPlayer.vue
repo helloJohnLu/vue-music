@@ -8,7 +8,7 @@
       <div class="player-wrapper">
         <PlayHeader></PlayHeader>
         <PlayerMiddle></PlayerMiddle>
-        <PlayerBottom :songDuration="songDuration"></PlayerBottom>
+        <PlayerBottom :songDuration="songDuration" :currentTime="currentTime"></PlayerBottom>
       </div>
       <div class="player-bg">
         <img :src="currentSong.picUrl" alt="">
@@ -29,6 +29,11 @@
     name: "NormalPlayer",
     props: {
       songDuration: {
+        type: Number,
+        default: 0,
+        required: true
+      },
+      currentTime: {
         type: Number,
         default: 0,
         required: true
