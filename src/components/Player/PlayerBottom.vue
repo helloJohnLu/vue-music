@@ -2,7 +2,7 @@
   <div class="player-bottom">
     <div class="bottom-progress">
       <span ref="showCurrentDuration">0:00</span>
-      <div class="progress-bar">
+      <div class="progress-bar" @click="processClick" ref="progressBar">
         <div class="progress-line" ref="progressLine">
           <div class="progress-dot"></div>
         </div>
@@ -44,7 +44,8 @@
       ...mapActions([
         'setIsPlaying',
         'setModeType',
-        'setSelectSong'
+        'setSelectSong',
+        'setClickCurrentTime'
       ]),
       play() {
         this.setIsPlaying(!this.isPlaying);
@@ -85,6 +86,26 @@
           minute: minute,
           second: second
         }
+      },
+      // 进度条点击，跳到点击位置播放
+      processClick(e) {
+        // 进度条距离屏幕左侧偏移量
+        // let processBarOffsetLeft = e.target.offsetLeft;  // bug
+        let processBarOffsetLeft = this.$refs.progressBar.offsetLeft;
+        // 点击位置距离屏幕左侧偏移量
+        let eventLeft = e.pageX;
+        // 进度条宽度
+        // let processBarWidth = e.target.offsetWidth;
+        let processBarWidth = this.$refs.progressBar.offsetWidth;
+        // 计算点击偏移比例
+        let clickOffset = eventLeft - processBarOffsetLeft;
+        let offsetRatio = clickOffset / processBarWidth;
+
+        this.$refs.progressLine.style.width = offsetRatio * 100 + '%';
+
+        // 计算当前应该从什么地方开始播放
+        let currentTime = this.songDuration * offsetRatio;
+        this.setClickCurrentTime(currentTime);
       }
     },
     watch: {

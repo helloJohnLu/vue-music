@@ -7,7 +7,8 @@ import {
   SET_SONG_DETAIL,
   SET_SONG_LYRIC,
   DELETE_SONG,
-  SET_SONG_SELECT
+  SET_SONG_SELECT,
+  SET_CLICK_CURRENT_TIME
 } from "./mutations-type";
 
 export default {
@@ -75,5 +76,8 @@ export default {
       index = 0;
     }
     state.currentIndex = index;
+  },
+  [SET_CLICK_CURRENT_TIME](state, time) {
+    state.clickCurrentTime = time;
   }
 }

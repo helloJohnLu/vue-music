@@ -7,7 +7,8 @@ import {
   SET_SONG_DETAIL,
   SET_SONG_LYRIC,
   DELETE_SONG,
-  SET_SONG_SELECT
+  SET_SONG_SELECT,
+  SET_CLICK_CURRENT_TIME
 } from "./mutations-type";
 import {getSongDetail, getSongLyric, getSongUrl} from "../api/index";
 
@@ -72,6 +73,10 @@ export default {
   // 列表播放界面点选播放歌曲
   setSelectSong({commit}, index) {
     commit(SET_SONG_SELECT, index);
+  },
+  // 点击进度条，时间
+  setClickCurrentTime({commit}, time) {
+    commit(SET_CLICK_CURRENT_TIME, time);
   }
 }
 

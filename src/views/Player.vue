@@ -24,7 +24,8 @@
       ...mapGetters([
         'currentSong',
         'isPlaying',
-        'currentIndex'
+        'currentIndex',
+        'clickCurrentTime'
       ])
     },
     methods: {
@@ -79,6 +80,12 @@
             this.songDuration = this.$refs.audio.duration;  // 获取歌曲时长
             this.setIsPlaying(true);
           }
+        }
+      },
+      // 监听点击进度条，时间变化
+      clickCurrentTime(newValue, oldValue) {
+        if (newValue) {
+          this.$refs.audio.currentTime = newValue;
         }
       }
     },

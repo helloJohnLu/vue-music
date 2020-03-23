@@ -9,5 +9,6 @@ export default {
   songs: [],
   currentIndex: 0,
   currentSong: {},
-  currentLyric: {}
+  currentLyric: {},
+  clickCurrentTime: 0
 }

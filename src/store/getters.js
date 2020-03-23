@@ -33,5 +33,9 @@ export default {
   },
   currentIndex(state) {
     return state.currentIndex;
+  },
+  // 点击进度条，时间
+  clickCurrentTime(state) {
+    return state.clickCurrentTime;
   }
 }
