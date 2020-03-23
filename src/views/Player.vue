@@ -3,7 +3,7 @@
     <NormalPlayer :songDuration="songDuration" :currentTime="currentTime"></NormalPlayer>
     <MiniPlayer></MiniPlayer>
     <ListPlayer ref="listPlayer"></ListPlayer>
-    <audio :src="currentSong.url" ref="audio" @timeupdate="timeupdate"></audio>
+    <audio :src="currentSong.url" ref="audio" @timeupdate="timeupdate" @ended="end"></audio>
   </div>
 </template>
 
@@ -12,6 +12,7 @@
   import MiniPlayer from "../components/Player/MiniPlayer";
   import ListPlayer from "../components/Player/ListPlayer";
   import {mapGetters, mapActions} from "vuex";
+  import mode from "../store/modeType";
 
   export default {
     name: "Play",
@@ -25,11 +26,13 @@
         'currentSong',
         'isPlaying',
         'currentIndex',
-        'clickCurrentTime'
+        'clickCurrentTime',
+        'modeType',
+        'songs'
       ])
     },
     methods: {
-      ...mapActions(['setIsPlaying']),
+      ...mapActions(['setIsPlaying', 'setSelectSong']),
       // 异步请求歌曲并的播放
       fetchSongAndPlay(audio) {
         fetch(this.currentSong.url)
@@ -48,6 +51,23 @@
       // 播放歌曲进度，当前时间
       timeupdate(e) {
         this.currentTime = e.target.currentTime;
+      },
+      // 监听歌曲是否播放完毕
+      end() {
+        if (this.modeType === mode.loop) {
+          this.setSelectSong(this.currentIndex + 1);
+        } else if (this.modeType === mode.one) {
+          this.$refs.audio.play();
+        } else if (this.modeType === mode.random) {
+          let index = this.getRandomNumber(0, this.songs.length - 1);
+          this.setSelectSong(index);
+        }
+      },
+      // 生成随机数
+      getRandomNumber(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;  // 含最大值，含最小值
       }
     },
     watch: {
