@@ -1,6 +1,6 @@
 <template>
   <div class="player">
-    <NormalPlayer></NormalPlayer>
+    <NormalPlayer :songDuration="songDuration"></NormalPlayer>
     <MiniPlayer></MiniPlayer>
     <ListPlayer ref="listPlayer"></ListPlayer>
     <audio :src="currentSong.url" ref="audio"></audio>
@@ -72,9 +72,20 @@
         if (newValue) {
           this.setIsPlaying(false);
           this.$refs.audio.oncanplay = () => {
+            this.songDuration = this.$refs.audio.duration;  // 获取歌曲时长
             this.setIsPlaying(true);
           }
         }
+      }
+    },
+    data: function () {
+      return {
+        songDuration: 0
+      }
+    },
+    mounted() {
+      this.$refs.audio.oncanplay = () => {
+        this.songDuration = this.$refs.audio.duration;  // 获取歌曲时长
       }
     }
   }

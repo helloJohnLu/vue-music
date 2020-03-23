@@ -7,7 +7,7 @@
           <div class="progress-dot"></div>
         </div>
       </div>
-      <span>0:00</span>
+      <span ref="showSongDuration">0:00</span>
     </div>
     <div class="bottom-control">
       <div class="mode loop" @click="setMode" ref="mode"></div>
@@ -25,6 +25,13 @@
 
   export default {
     name: "PlayerBottom",
+    props: {
+      songDuration: {
+        type: Number,
+        default: 0,
+        required: true
+      }
+    },
     computed: {
       ...mapGetters(['isPlaying', 'modeType', 'currentIndex'])
     },
@@ -55,6 +62,24 @@
         } else if (this.modeType === mode.random) {
           this.setModeType(mode.loop);
         }
+      },
+      // 格式化歌曲时长
+      formatSongTime(time) {
+        let songDuration = time;
+        // 小时
+        let hour = Math.floor(songDuration / (60 * 60) % 24);
+        hour = hour >= 10 ? hour : '0' + hour;
+        // 分钟
+        let minute = Math.floor(songDuration / (60) % 60);
+        minute = minute >= 10 ? minute : '0' + minute;
+        // 秒
+        let second = Math.floor(songDuration % 60);
+        second = second >= 10 ? second : '0' + second;
+        return {
+          hour: hour,
+          minute: minute,
+          second: second
+        }
       }
     },
     watch: {
@@ -76,6 +101,10 @@
           this.$refs.mode.classList.remove('one');
           this.$refs.mode.classList.add('random')
         }
+      },
+      songDuration() {
+        let songTime = this.formatSongTime(this.songDuration);
+        this.$refs.showSongDuration.innerHTML = songTime.minute + ':' + songTime.second;
       }
     }
   }
@@ -146,9 +175,11 @@
         &.loop {
           @include bg_img('../../assets/images/loop');
         }
+
         &.one {
           @include bg_img('../../assets/images/one');
         }
+
         &.random {
           @include bg_img('../../assets/images/shuffle');
         }

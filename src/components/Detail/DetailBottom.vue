@@ -37,7 +37,7 @@
       selectAllMusic() {
         this.setFullScreen(true);
         let ids = this.playlist.map(item => item.id);
-        console.log(ids);
+        // console.log(ids);
         this.setSongDetail(ids);
       }
     }
