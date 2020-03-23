@@ -3,7 +3,7 @@
     <NormalPlayer></NormalPlayer>
     <MiniPlayer></MiniPlayer>
     <ListPlayer ref="listPlayer"></ListPlayer>
-    <audio :src="this.currentSong.url" ref="audio"></audio>
+    <audio :src="currentSong.url" ref="audio"></audio>
   </div>
 </template>
 
@@ -28,13 +28,29 @@
       ])
     },
     methods: {
-      ...mapActions(['setIsPlaying'])
+      ...mapActions(['setIsPlaying']),
+      // 异步请求歌曲并的播放
+      fetchSongAndPlay(audio) {
+        fetch(this.currentSong.url)
+          .then(response => response.blob())
+          .then(blob => {
+            audio.audioObject = blob;
+            return audio.play();
+          })
+          .then(_ => {
+            // Video playback started ;)
+          })
+          .catch(e => {
+            // Video playback failed ;(
+          })
+      }
     },
     watch: {
       // 播放按钮 播放/暂停
       isPlaying(newValue, oldValue) {
         if (newValue) {
-          this.$refs.audio.play();
+          // this.$refs.audio.play();
+          this.fetchSongAndPlay(this.$refs.audio);
         } else {
           this.$refs.audio.pause();
         }
@@ -54,13 +70,9 @@
       // 监听歌曲切换 改进
       currentSong(newValue, oldValue) {
         if (newValue) {
-          this.setIsPlaying(true);
+          this.setIsPlaying(false);
           this.$refs.audio.oncanplay = () => {
-            if (this.isPlaying) {
-              this.$refs.audio.play();
-            } else {
-              this.$refs.audio.pause();
-            }
+            this.setIsPlaying(true);
           }
         }
       }
