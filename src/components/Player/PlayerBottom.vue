@@ -3,7 +3,7 @@
     <div class="bottom-progress">
       <span ref="showCurrentDuration">0:00</span>
       <div class="progress-bar">
-        <div class="progress-line">
+        <div class="progress-line" ref="progressLine">
           <div class="progress-dot"></div>
         </div>
       </div>
@@ -112,8 +112,12 @@
         this.$refs.showSongDuration.innerHTML = songTime.minute + ':' + songTime.second;
       },
       currentTime(newValue, oldValue) {
+        // 1. 当前时间
         let songTime = this.formatSongTime(newValue);
         this.$refs.showCurrentDuration.innerHTML = songTime.minute + ':' + songTime.second;
+        // 2. 进度条比例: 当前时间 / 总时长
+        let value = newValue / this.songDuration * 100;
+        this.$refs.progressLine.style.width = value + '%';
       }
     }
   }
@@ -146,12 +150,12 @@
         margin: 0 10px;
         height: 10px;
         background-color: #fff;
-        position: relative;
 
         .progress-line {
-          width: 50%;
+          width: 0;
           height: 100%;
           background-color: #ccc;
+          position: relative;
 
           .progress-dot {
             width: 20px;
@@ -159,7 +163,7 @@
             border-radius: 50%;
             background-color: #fff;
             position: absolute;
-            left: 50%;
+            left: 100%;
             top: 50%;
             transform: translateY(-50%);
           }
