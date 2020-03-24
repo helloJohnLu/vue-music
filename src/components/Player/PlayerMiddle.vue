@@ -13,7 +13,7 @@
           <li
             v-for="(value, key) in currentLyric"
             :key="key"
-            :class="{'active': playingTimeInt === Number(key)}"
+            :class="{'active': currentLineTime === key}"
           >{{value}}</li>
         </ul>
       </ScrollView>
@@ -57,7 +57,7 @@
           observeParents: true,
           observeSlideChildren: true
         },
-        playingTimeInt: '0',  // 播放时间取整
+        currentLineTime: '0'
       }
     },
     computed: {
@@ -72,8 +72,14 @@
         }
       },
       currentTime(newValue, oldValue) {
-        this.playingTimeInt = Math.floor(newValue);
-        console.log(this.playingTimeInt, typeof this.playingTimeInt);
+        // 当前播放时间取整
+        let playingTimeInt = Math.floor(newValue) + '';
+        // 判断歌词中当前时间有没有值
+        let result = this.currentLyric[playingTimeInt];
+        // 如果当前时间没有值，则不改变当前播放时间。有值时才改变歌词高亮
+        if (result !== undefined && result !== '') {
+          this.currentLineTime = playingTimeInt;
+        }
       }
     },
     methods: {
