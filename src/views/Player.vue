@@ -82,7 +82,15 @@
           // this.$refs.audio.play();
           this.fetchSongAndPlay(this.$refs.audio);
         } else {
-          this.$refs.audio.pause();
+          // this.$refs.audio.pause();
+          let playPromise = this.$refs.audio.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              this.$refs.audio.pause();
+            }).catch(()=> {
+
+            })
+          }
         }
       },
       // 监听歌曲切换

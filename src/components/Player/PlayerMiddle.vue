@@ -190,7 +190,7 @@
         margin: 10px 0;
 
         &:last-of-type {
-          padding-bottom: 50%;
+          padding-bottom: 60%;
         }
 
         &.active {
