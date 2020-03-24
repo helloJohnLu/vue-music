@@ -40,6 +40,6 @@ export default {
   },
   // 收藏歌曲
   favoriteList(state) {
-
+    return state.favoriteList;
   }
 }

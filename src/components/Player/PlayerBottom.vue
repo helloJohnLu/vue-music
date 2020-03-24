@@ -14,7 +14,7 @@
       <div class="prev" @click="prev"></div>
       <div class="play" @click="play" ref="play"></div>
       <div class="next" @click="next"></div>
-      <div class="favorite" @click="favorite"></div>
+      <div class="favorite" @click="favorite" :class="{'active': isFavorite(currentSong)}"></div>
     </div>
   </div>
 </template>
@@ -38,7 +38,13 @@
       }
     },
     computed: {
-      ...mapGetters(['isPlaying', 'modeType', 'currentIndex', 'currentSong'])
+      ...mapGetters([
+        'isPlaying',
+        'modeType',
+        'currentIndex',
+        'currentSong',
+        'favoriteList'
+      ])
     },
     methods: {
       ...mapActions([
@@ -73,6 +79,14 @@
       // 收藏歌曲
       favorite() {
         this.setFavoriteSong(this.currentSong);
+      },
+      // 判断当前歌曲是否被收藏
+      isFavorite(song) {
+        // Array.find(callback) 参数是回调函数，找到则返回第一个满足条件的值，未找到返回 undefined
+        let result = this.favoriteList.find(value => {
+          return value === song;
+        });
+        return result !== undefined;
       },
       // 格式化歌曲时长
       formatSongTime(time) {

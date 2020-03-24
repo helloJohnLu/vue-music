@@ -26,7 +26,7 @@
                   <p>{{value.name}}</p>
                 </div>
                 <div class="item-right">
-                  <div class="item-favorite"></div>
+                  <div class="item-favorite" @click.stop="favorite(value)" :class="{'active': isFavorite(value)}"></div>
                   <div class="item-del" @click.stop="del(index)"></div>
                 </div>
               </li>
@@ -59,7 +59,8 @@
         'modeType',
         'isShowListPlayer',
         'songs',
-        'currentIndex'
+        'currentIndex',
+        'favoriteList'
       ])
     },
     methods: {
@@ -68,7 +69,8 @@
         'setModeType',
         'setListPlayer',
         'deleteSong',
-        'setSelectSong'
+        'setSelectSong',
+        'setFavoriteSong'
       ]),
       // 点击淡出列表播放界面
       hidden() {
@@ -84,6 +86,18 @@
       // 播放按钮的切换
       play() {
         this.setIsPlaying(!this.isPlaying);
+      },
+      // 收藏歌曲
+      favorite(value) {
+        this.setFavoriteSong(value);
+      },
+      // 判断歌典是否被收藏
+      isFavorite(song) {
+        // Array.find(callback) 参数是回调函数，找到则返回第一个满足条件的值，未找到返回 undefined
+        let result = this.favoriteList.find(value => {
+          return value === song;
+        });
+        return result !== undefined;
       },
       // 播放模式切换
       setMode() {
@@ -243,7 +257,11 @@
             .item-favorite {
               width: 56px;
               height: 56px;
-              @include bg_img('../../assets/images/small_favorite')
+              @include bg_img('../../assets/images/small_un_favorite');
+
+              &.active {
+                @include bg_img('../../assets/images/small_favorite');
+              }
             }
 
             .item-del {
