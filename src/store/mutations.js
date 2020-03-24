@@ -9,7 +9,8 @@ import {
   DELETE_SONG,
   SET_SONG_SELECT,
   SET_CLICK_CURRENT_TIME,
-  SET_FAVORITE_SONG
+  SET_FAVORITE_SONG,
+  SET_FAVORITE_LIST
 } from "./mutations-type";
 
 export default {
@@ -90,5 +91,9 @@ export default {
     if (result === undefined) {
       state.favoriteList.push(song);
     }
+  },
+  // 收藏歌曲数组更新
+  [SET_FAVORITE_LIST](state, list) {
+    state.favoriteList = list;
   }
 }

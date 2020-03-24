@@ -28,11 +28,16 @@
         'currentIndex',
         'clickCurrentTime',
         'modeType',
-        'songs'
+        'songs',
+        'favoriteList'
       ])
     },
     methods: {
-      ...mapActions(['setIsPlaying', 'setSelectSong']),
+      ...mapActions([
+        'setIsPlaying',
+        'setSelectSong',
+        'setFavoriteList'
+      ]),
       // 异步请求歌曲并的播放
       fetchSongAndPlay(audio) {
         fetch(this.currentSong.url)
@@ -107,6 +112,10 @@
         if (newValue) {
           this.$refs.audio.currentTime = newValue;
         }
+      },
+      // 监听收藏歌典数组变化
+      favoriteList(newValue, oldValue) {
+        window.localStorage.setItem('favoriteList', JSON.stringify(newValue));  // JSON.stringify 转成字符串
       }
     },
     data: function () {
@@ -114,6 +123,15 @@
         songDuration: 0,
         currentTime: 0
       }
+    },
+    created() {
+      // 重新读取收藏歌曲数组
+      let list = JSON.parse(window.localStorage.getItem('favoriteList'));  // 字符串转成数组
+      // 如果 favoriteList 为空数组，不读取/赋值
+      if (list === null)
+        return;
+
+      this.setFavoriteList(list);
     },
     mounted() {
       this.$refs.audio.oncanplay = () => {

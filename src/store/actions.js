@@ -9,7 +9,8 @@ import {
   DELETE_SONG,
   SET_SONG_SELECT,
   SET_CLICK_CURRENT_TIME,
-  SET_FAVORITE_SONG
+  SET_FAVORITE_SONG,
+  SET_FAVORITE_LIST
 } from "./mutations-type";
 import {getSongDetail, getSongLyric, getSongUrl} from "../api/index";
 
@@ -89,6 +90,10 @@ export default {
   // 触发收藏歌曲
   setFavoriteSong({commit}, song) {
     commit(SET_FAVORITE_SONG, song);
+  },
+  // 收藏歌曲列表更新
+  setFavoriteList({commit}, list) {
+    commit(SET_FAVORITE_LIST, list);
   }
 }
 

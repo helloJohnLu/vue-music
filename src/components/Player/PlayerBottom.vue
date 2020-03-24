@@ -84,7 +84,8 @@
       isFavorite(song) {
         // Array.find(callback) 参数是回调函数，找到则返回第一个满足条件的值，未找到返回 undefined
         let result = this.favoriteList.find(value => {
-          return value === song;
+          // 应当判断对象的 id，而不是直接判断两个对象，否则刷新网页将会报错
+          return value.id === song.id;
         });
         return result !== undefined;
       },
