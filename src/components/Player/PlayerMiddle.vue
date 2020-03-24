@@ -73,6 +73,7 @@
         }
       },
       currentTime(newValue, oldValue) {
+        /*
         // 1、高亮歌词的同步
         let playingTimeInt = Math.floor(newValue) + '';  // 当前播放时间取整
         let result = this.currentLyric[playingTimeInt];  // 判断歌词中当前时间有没有值
@@ -89,6 +90,22 @@
             this.$refs.scrollView.scrollTo(0, lyricHeight / 2 - currentLyricTop, 100);
           }
         }
+        */
+
+        // 1、歌词高亮同步
+        let playingTimeInt = Math.floor(newValue) + '';  // 当前播放时间取整
+        this.currentLineTime = this.getCurrentLyric(playingTimeInt);
+        // 2、歌词滚动同步
+        // 当前歌词行距离歌歌界面顶部距离
+        let currentLyricTop = document.querySelector('li.active').offsetTop;
+        // 歌词界面高度 （this.$refs.lyric 不是 HTML 原生元素，无法获取高度，这里必须加上 $el）
+        let lyricHeight = this.$refs.lyric.$el.offsetHeight;
+        // 判断当前高亮行距离顶部的距离是否超过歌词界面一半
+        if (currentLyricTop > lyricHeight / 2) {
+          this.$refs.scrollView.scrollTo(0, lyricHeight / 2 - currentLyricTop, 100);
+        } else {
+          this.$refs.scrollView.scrollTo(0, 0, 100);
+        }
       }
     },
     methods: {
@@ -98,6 +115,17 @@
           return this.currentLyric[key];
         }*/
         return this.currentLyric[0];
+      },
+      // 获取当前歌词
+      getCurrentLyric(playingTimeInt) {
+        let result = this.currentLyric[playingTimeInt + ''];
+        // 如果获取不到，则获取上一行歌词
+        if (result === undefined || result === '') {
+          playingTimeInt--;
+          return this.getCurrentLyric(playingTimeInt);
+        } else {
+          return playingTimeInt + '';
+        }
       }
     }
   }
