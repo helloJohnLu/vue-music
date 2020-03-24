@@ -7,14 +7,15 @@
       </div>
       <p>{{getFirstLyric()}}</p>
     </swiper-slide>
-    <swiper-slide class="lyric">
-      <ScrollView>
+    <swiper-slide class="lyric" ref="lyric">
+      <ScrollView ref="scrollView">
         <ul>
           <li
             v-for="(value, key) in currentLyric"
             :key="key"
             :class="{'active': currentLineTime === key}"
-          >{{value}}</li>
+          >{{value}}
+          </li>
         </ul>
       </ScrollView>
     </swiper-slide>
@@ -49,7 +50,7 @@
           // 如果需要分页器
           pagination: {
             el: '.swiper-pagination',
-            bulletClass : 'my-bullet', // 分页器小圆点类名
+            bulletClass: 'my-bullet', // 分页器小圆点类名
             bulletActiveClass: 'my-bullet-active', // 激活的小圆点类名
           },
           // 异步加载
@@ -72,13 +73,21 @@
         }
       },
       currentTime(newValue, oldValue) {
-        // 当前播放时间取整
-        let playingTimeInt = Math.floor(newValue) + '';
-        // 判断歌词中当前时间有没有值
-        let result = this.currentLyric[playingTimeInt];
+        // 1、高亮歌词的同步
+        let playingTimeInt = Math.floor(newValue) + '';  // 当前播放时间取整
+        let result = this.currentLyric[playingTimeInt];  // 判断歌词中当前时间有没有值
         // 如果当前时间没有值，则不改变当前播放时间。有值时才改变歌词高亮
         if (result !== undefined && result !== '') {
           this.currentLineTime = playingTimeInt;
+          // 2、歌词滚动同步
+          // 当前歌词行距离歌歌界面顶部距离
+          let currentLyricTop = document.querySelector('li.active').offsetTop;
+          // 歌词界面高度 （this.$refs.lyric 不是 HTML 原生元素，无法获取高度，这里必须加上 $el）
+          let lyricHeight = this.$refs.lyric.$el.offsetHeight;
+          // 判断当前高亮行距离顶部的距离是否超过歌词界面一半
+          if (currentLyricTop > lyricHeight / 2) {
+            this.$refs.scrollView.scrollTo(0, lyricHeight / 2 - currentLyricTop, 100);
+          }
         }
       }
     },
@@ -117,7 +126,8 @@
         overflow: hidden;
         animation: sport 10s linear infinite;
         animation-play-state: paused;
-        &.active{
+
+        &.active {
           animation-play-state: running;
         }
 
@@ -142,7 +152,7 @@
         margin: 10px 0;
 
         &:last-of-type {
-          padding-bottom: 100px;
+          padding-bottom: 50%;
         }
 
         &.active {
@@ -151,7 +161,7 @@
       }
     }
   }
-  
+
   @keyframes sport {
     from {
       transform: rotate(0deg);
@@ -168,10 +178,11 @@
     display: inline-block;
     width: 20px;
     height: 20px;
-    border-radius:10px;
+    border-radius: 10px;
     background-color: #fff;
     margin: 0 20px;
   }
+
   .my-bullet-active {
     @include bg_color();
     width: 60px;
