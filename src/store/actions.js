@@ -42,7 +42,14 @@ export default {
     let list = [];
     result.songs.forEach((value, i) => {
       let obj = {};
-      obj.url = urls.data[i].url;
+      // obj.url = urls.data[i].url;
+      for (const key in urls.data) {
+        let item = urls.data[key];
+        if (value.id === item.id) {
+          obj.url = item.url;
+          break;
+        }
+      }
       obj.name = value.name;
       obj.id = value.id;
       let singer = '';
