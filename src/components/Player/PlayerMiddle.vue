@@ -10,7 +10,11 @@
     <swiper-slide class="lyric">
       <ScrollView>
         <ul>
-          <li v-for="(value, index) in currentLyric" :key="index">{{value}}</li>
+          <li
+            v-for="(value, key) in currentLyric"
+            :key="key"
+            :class="{'active': playingTimeInt === Number(key)}"
+          >{{value}}</li>
         </ul>
       </ScrollView>
     </swiper-slide>
@@ -27,6 +31,13 @@
 
   export default {
     name: "PlayerMiddle",
+    props: {
+      currentTime: {
+        type: Number,
+        default: 0,
+        required: true
+      }
+    },
     components: {
       swiper,
       swiperSlide,
@@ -46,6 +57,7 @@
           observeParents: true,
           observeSlideChildren: true
         },
+        playingTimeInt: '0',  // 播放时间取整
       }
     },
     computed: {
@@ -58,6 +70,10 @@
         } else {
           this.$refs.cdWrapper.classList.remove('active');
         }
+      },
+      currentTime(newValue, oldValue) {
+        this.playingTimeInt = Math.floor(newValue);
+        console.log(this.playingTimeInt, typeof this.playingTimeInt);
       }
     },
     methods: {
@@ -121,6 +137,10 @@
 
         &:last-of-type {
           padding-bottom: 100px;
+        }
+
+        &.active {
+          color: #fff;
         }
       }
     }

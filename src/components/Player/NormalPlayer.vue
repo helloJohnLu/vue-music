@@ -7,7 +7,7 @@
     <div class="normal-player" v-show="this.isFullScreen">
       <div class="player-wrapper">
         <PlayHeader></PlayHeader>
-        <PlayerMiddle></PlayerMiddle>
+        <PlayerMiddle :currentTime="currentTime"></PlayerMiddle>
         <PlayerBottom :songDuration="songDuration" :currentTime="currentTime"></PlayerBottom>
       </div>
       <div class="player-bg">
