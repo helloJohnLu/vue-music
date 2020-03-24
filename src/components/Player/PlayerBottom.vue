@@ -14,7 +14,7 @@
       <div class="prev" @click="prev"></div>
       <div class="play" @click="play" ref="play"></div>
       <div class="next" @click="next"></div>
-      <div class="favorite"></div>
+      <div class="favorite" @click="favorite"></div>
     </div>
   </div>
 </template>
@@ -38,14 +38,15 @@
       }
     },
     computed: {
-      ...mapGetters(['isPlaying', 'modeType', 'currentIndex'])
+      ...mapGetters(['isPlaying', 'modeType', 'currentIndex', 'currentSong'])
     },
     methods: {
       ...mapActions([
         'setIsPlaying',
         'setModeType',
         'setSelectSong',
-        'setClickCurrentTime'
+        'setClickCurrentTime',
+        'setFavoriteSong',
       ]),
       play() {
         this.setIsPlaying(!this.isPlaying);
@@ -68,6 +69,10 @@
         } else if (this.modeType === mode.random) {
           this.setModeType(mode.loop);
         }
+      },
+      // 收藏歌曲
+      favorite() {
+        this.setFavoriteSong(this.currentSong);
       },
       // 格式化歌曲时长
       formatSongTime(time) {

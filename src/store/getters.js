@@ -37,5 +37,9 @@ export default {
   // 点击进度条，时间
   clickCurrentTime(state) {
     return state.clickCurrentTime;
+  },
+  // 收藏歌曲
+  favoriteList(state) {
+
   }
 }

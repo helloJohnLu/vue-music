@@ -8,7 +8,8 @@ import {
   SET_SONG_LYRIC,
   DELETE_SONG,
   SET_SONG_SELECT,
-  SET_CLICK_CURRENT_TIME
+  SET_CLICK_CURRENT_TIME,
+  SET_FAVORITE_SONG
 } from "./mutations-type";
 
 export default {
@@ -79,5 +80,15 @@ export default {
   },
   [SET_CLICK_CURRENT_TIME](state, time) {
     state.clickCurrentTime = time;
+  },
+  // 收藏歌曲
+  [SET_FAVORITE_SONG](state, song) {
+    // 保存歌曲前先遍历数组，看数组中是否有（之前已收藏过）
+    let result = state.favoriteList.find(currentValue => {
+      return currentValue === song;
+    });
+    if (result === undefined) {
+      state.favoriteList.push(song);
+    }
   }
 }
