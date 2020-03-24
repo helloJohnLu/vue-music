@@ -106,6 +106,13 @@
         } else {
           this.$refs.scrollView.scrollTo(0, 0, 100);
         }
+      },
+      // 监听歌词变化，解决第 0 秒歌词切换时产生的 bug: getCurrentLyric() 陷入无限循环
+      currentLyric(newValue, oldValue) {
+        for (let key in newValue) {
+          this.currentLineTime = key;
+          return;
+        }
       }
     },
     methods: {
@@ -118,6 +125,9 @@
       },
       // 获取当前歌词
       getCurrentLyric(playingTimeInt) {
+        if (playingTimeInt < 0) {
+          return this.currentLineTime;
+        }
         let result = this.currentLyric[playingTimeInt + ''];
         // 如果获取不到，则获取上一行歌词
         if (result === undefined || result === '') {
