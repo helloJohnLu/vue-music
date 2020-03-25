@@ -13,6 +13,7 @@
   import ListPlayer from "../components/Player/ListPlayer";
   import {mapGetters, mapActions} from "vuex";
   import mode from "../store/modeType";
+  import {getRandomNumber, setlocalStorage, getlocalStorage} from "../tools/tools";
 
   export default {
     name: "Play",
@@ -67,15 +68,9 @@
         } else if (this.modeType === mode.one) {
           this.$refs.audio.play();
         } else if (this.modeType === mode.random) {
-          let index = this.getRandomNumber(0, this.songs.length - 1);
+          let index = getRandomNumber(0, this.songs.length - 1);
           this.setSelectSong(index);
         }
-      },
-      // 生成随机数
-      getRandomNumber(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min;  // 含最大值，含最小值
       }
     },
     watch: {
@@ -90,7 +85,7 @@
           if (playPromise !== undefined) {
             playPromise.then(() => {
               this.$refs.audio.pause();
-            }).catch(()=> {
+            }).catch(() => {
 
             })
           }
@@ -129,11 +124,13 @@
       },
       // 监听收藏歌典数组变化
       favoriteList(newValue, oldValue) {
-        window.localStorage.setItem('favoriteList', JSON.stringify(newValue));  // JSON.stringify 转成字符串
+        // window.localStorage.setItem('favoriteList', JSON.stringify(newValue));  // JSON.stringify 转成字符串
+        setlocalStorage('favoriteList', newValue);
       },
       // 播放历史，数据据久化
       historyList(newValue, oldValue) {
-        window.localStorage.setItem('historyList', JSON.stringify(newValue));  // JSON.stringify 转成字符串
+        // window.localStorage.setItem('historyList', JSON.stringify(newValue));  // JSON.stringify 转成字符串
+        setlocalStorage('historyList', newValue);
       }
     },
     data: function () {
@@ -144,7 +141,8 @@
     },
     created() {
       // 读取收藏歌曲数组
-      let favoriteList = JSON.parse(window.localStorage.getItem('favoriteList'));  // 字符串转成数组
+      // let favoriteList = JSON.parse(window.localStorage.getItem('favoriteList'));  // 字符串转成数组
+      let favoriteList = getlocalStorage('favoriteList');
       // 如果 favoriteList 为空数组，不读取/赋值
       if (favoriteList === null) {
         return;
@@ -152,7 +150,8 @@
       this.setFavoriteList(favoriteList);
 
       // 读取播放历史
-      let historyList = JSON.parse(window.localStorage.getItem('historyList'));  // 字符串转成数组
+      // let historyList = JSON.parse(window.localStorage.getItem('historyList'));  // 字符串转成数组
+      let historyList = getlocalStorage('historyList');
       // 如果 favoriteList 为空数组，不读取/赋值
       if (historyList === null) {
         return;

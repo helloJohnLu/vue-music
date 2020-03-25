@@ -22,6 +22,7 @@
 <script>
   import {mapGetters, mapActions} from "vuex";
   import mode from "../../store/modeType";
+  import {formatSongTime} from "../../tools/tools";
 
   export default {
     name: "PlayerBottom",
@@ -89,24 +90,6 @@
         });
         return result !== undefined;
       },
-      // 格式化歌曲时长
-      formatSongTime(time) {
-        let songDuration = time;
-        // 小时
-        let hour = Math.floor(songDuration / (60 * 60) % 24);
-        hour = hour >= 10 ? hour : '0' + hour;
-        // 分钟
-        let minute = Math.floor(songDuration / (60) % 60);
-        minute = minute >= 10 ? minute : '0' + minute;
-        // 秒
-        let second = Math.floor(songDuration % 60);
-        second = second >= 10 ? second : '0' + second;
-        return {
-          hour: hour,
-          minute: minute,
-          second: second
-        }
-      },
       // 进度条点击，跳到点击位置播放
       processClick(e) {
         // 进度条距离屏幕左侧偏移量
@@ -149,12 +132,12 @@
         }
       },
       songDuration(newValue, oldValue) {
-        let songTime = this.formatSongTime(newValue);
+        let songTime = formatSongTime(newValue);
         this.$refs.showSongDuration.innerHTML = songTime.minute + ':' + songTime.second;
       },
       currentTime(newValue, oldValue) {
         // 1. 当前时间
-        let songTime = this.formatSongTime(newValue);
+        let songTime = formatSongTime(newValue);
         this.$refs.showCurrentDuration.innerHTML = songTime.minute + ':' + songTime.second;
         // 2. 进度条比例: 当前时间 / 总时长
         let value = newValue / this.songDuration * 100;
