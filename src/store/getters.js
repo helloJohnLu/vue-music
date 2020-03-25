@@ -41,5 +41,9 @@ export default {
   // 收藏歌曲
   favoriteList(state) {
     return state.favoriteList;
+  },
+  // 播放历史
+  historyList(state) {
+    return state.historyList;
   }
 }

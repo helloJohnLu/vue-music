@@ -10,7 +10,9 @@ import {
   SET_SONG_SELECT,
   SET_CLICK_CURRENT_TIME,
   SET_FAVORITE_SONG,
-  SET_FAVORITE_LIST
+  SET_FAVORITE_LIST,
+  SET_HISTORY_SONG,
+  SET_HISTORY_LIST
 } from "./mutations-type";
 
 export default {
@@ -88,6 +90,7 @@ export default {
     let result = state.favoriteList.find(currentValue => {
       return currentValue === song;
     });
+    // 如果之前没有保存过
     if (result === undefined) {
       state.favoriteList.push(song);
     }
@@ -95,5 +98,23 @@ export default {
   // 收藏歌曲数组更新
   [SET_FAVORITE_LIST](state, list) {
     state.favoriteList = list;
-  }
+  },
+  // 收藏歌曲
+  [SET_HISTORY_SONG](state, song) {
+    let result = state.historyList.find(currentValue => {
+      return currentValue === song;
+    });
+    // 如果播放历史列表里没有
+    if (result === undefined) {
+      // 最多保存 30 首
+      if (state.historyList.length > 30) {
+        state.historyList.pop(state.historyList.length - 1);
+      }
+      state.historyList.unshift(song);
+    }
+  },
+  // 播放历史列表更新
+  [SET_HISTORY_LIST](state, list) {
+    state.historyList = list;
+  },
 }

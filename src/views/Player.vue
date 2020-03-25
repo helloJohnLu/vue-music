@@ -36,7 +36,8 @@
       ...mapActions([
         'setIsPlaying',
         'setSelectSong',
-        'setFavoriteList'
+        'setFavoriteList',
+        'setHistorySong'
       ]),
       // 异步请求歌曲并的播放
       fetchSongAndPlay(audio) {
@@ -79,6 +80,9 @@
       // 播放按钮 播放/暂停
       isPlaying(newValue, oldValue) {
         if (newValue) {
+          // 写入播放历史
+          this.setHistorySong(this.currentSong);
+
           // this.$refs.audio.play();
           this.fetchSongAndPlay(this.$refs.audio);
         } else {
@@ -108,6 +112,9 @@
       // 监听歌曲切换 改进
       currentSong(newValue, oldValue) {
         if (newValue) {
+          // 写入播放历史
+          this.setHistorySong(this.currentSong);
+
           this.setIsPlaying(false);
           this.$refs.audio.oncanplay = () => {
             this.songDuration = this.$refs.audio.duration;  // 获取歌曲时长

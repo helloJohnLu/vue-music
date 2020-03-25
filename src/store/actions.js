@@ -10,7 +10,9 @@ import {
   SET_SONG_SELECT,
   SET_CLICK_CURRENT_TIME,
   SET_FAVORITE_SONG,
-  SET_FAVORITE_LIST
+  SET_FAVORITE_LIST,
+  SET_HISTORY_SONG,
+  SET_HISTORY_LIST
 } from "./mutations-type";
 import {getSongDetail, getSongLyric, getSongUrl} from "../api/index";
 
@@ -94,6 +96,14 @@ export default {
   // 收藏歌曲列表更新
   setFavoriteList({commit}, list) {
     commit(SET_FAVORITE_LIST, list);
+  },
+  // 触发写入播放历史方法
+  setHistorySong({commit}, song) {
+    commit(SET_HISTORY_SONG, song);
+  },
+  // 播放历史列表更新
+  setHistoryList({commit}, list) {
+    commit(SET_HISTORY_LIST, list);
   }
 }
 
