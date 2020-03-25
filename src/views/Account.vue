@@ -1,14 +1,21 @@
 <template>
   <transition appear>
     <div class="account">
-
+      <AccountHeader></AccountHeader>
     </div>
   </transition>
 </template>
 
 <script>
+  import AccountHeader from "../components/account/AccountHeader";
+
+
+
   export default {
-    name: "Account"
+    name: "Account",
+    components: {
+      AccountHeader,
+    }
   }
 </script>
 
