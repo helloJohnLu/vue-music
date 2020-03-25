@@ -29,7 +29,8 @@
         'clickCurrentTime',
         'modeType',
         'songs',
-        'favoriteList'
+        'favoriteList',
+        'historyList',
       ])
     },
     methods: {
@@ -37,7 +38,8 @@
         'setIsPlaying',
         'setSelectSong',
         'setFavoriteList',
-        'setHistorySong'
+        'setHistorySong',
+        'setHistoryList'
       ]),
       // 异步请求歌曲并的播放
       fetchSongAndPlay(audio) {
@@ -80,9 +82,6 @@
       // 播放按钮 播放/暂停
       isPlaying(newValue, oldValue) {
         if (newValue) {
-          // 写入播放历史
-          this.setHistorySong(this.currentSong);
-
           // this.$refs.audio.play();
           this.fetchSongAndPlay(this.$refs.audio);
         } else {
@@ -112,13 +111,13 @@
       // 监听歌曲切换 改进
       currentSong(newValue, oldValue) {
         if (newValue) {
-          // 写入播放历史
-          this.setHistorySong(this.currentSong);
-
           this.setIsPlaying(false);
           this.$refs.audio.oncanplay = () => {
             this.songDuration = this.$refs.audio.duration;  // 获取歌曲时长
             this.setIsPlaying(true);
+
+            // 写入播放历史
+            this.setHistorySong(this.currentSong);
           }
         }
       },
@@ -131,6 +130,10 @@
       // 监听收藏歌典数组变化
       favoriteList(newValue, oldValue) {
         window.localStorage.setItem('favoriteList', JSON.stringify(newValue));  // JSON.stringify 转成字符串
+      },
+      // 播放历史，数据据久化
+      historyList(newValue, oldValue) {
+        window.localStorage.setItem('historyList', JSON.stringify(newValue));  // JSON.stringify 转成字符串
       }
     },
     data: function () {
@@ -140,13 +143,21 @@
       }
     },
     created() {
-      // 重新读取收藏歌曲数组
-      let list = JSON.parse(window.localStorage.getItem('favoriteList'));  // 字符串转成数组
+      // 读取收藏歌曲数组
+      let favoriteList = JSON.parse(window.localStorage.getItem('favoriteList'));  // 字符串转成数组
       // 如果 favoriteList 为空数组，不读取/赋值
-      if (list === null)
+      if (favoriteList === null) {
         return;
+      }
+      this.setFavoriteList(favoriteList);
 
-      this.setFavoriteList(list);
+      // 读取播放历史
+      let historyList = JSON.parse(window.localStorage.getItem('historyList'));  // 字符串转成数组
+      // 如果 favoriteList 为空数组，不读取/赋值
+      if (historyList === null) {
+        return;
+      }
+      this.setHistoryList(historyList);
     },
     mounted() {
       this.$refs.audio.oncanplay = () => {

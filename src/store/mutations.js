@@ -99,11 +99,10 @@ export default {
   [SET_FAVORITE_LIST](state, list) {
     state.favoriteList = list;
   },
-  // 收藏歌曲
+  // 播放历史
   [SET_HISTORY_SONG](state, song) {
-    let result = state.historyList.find(currentValue => {
-      return currentValue === song;
-    });
+    let result = state.historyList.find(currentValue => currentValue.id === song.id);
+
     // 如果播放历史列表里没有
     if (result === undefined) {
       // 最多保存 30 首
@@ -111,6 +110,11 @@ export default {
         state.historyList.pop(state.historyList.length - 1);
       }
       state.historyList.unshift(song);
+    } else {
+      let index = state.historyList.indexOf(result);
+      let song = state.historyList.splice(index, 1);        // Array.splice 删除数组元素时返回的是数组
+      let songToObj = JSON.parse(JSON.stringify(song[0]));  // song 转换成对象
+      state.historyList.unshift(songToObj);
     }
   },
   // 播放历史列表更新
