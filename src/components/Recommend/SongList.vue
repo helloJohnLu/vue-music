@@ -3,21 +3,12 @@
     <div class="song-top">
       <h3>最新音乐</h3>
     </div>
-    <ul class="song-list">
-      <li v-for="value in songs" :key="value.id" class="item" @click="selectMusic(value.id)">
-<!--        <img :src="value.song.album.picUrl" alt="">-->
-        <img v-lazy="value.song.album.picUrl" alt="">
-        <div>
-          <h4>{{value.name}}</h4>
-          <p>{{value.song.artists[0].name}}</p>
-        </div>
-      </li>
-    </ul>
+    <SongListItem :songs="songs"></SongListItem>
   </div>
 </template>
 
 <script>
-  import {mapActions} from "vuex";
+  import SongListItem from "../SongListItem";
 
   export default {
     name: "SongList",
@@ -28,17 +19,8 @@
         required: true
       }
     },
-    methods: {
-      ...mapActions([
-        'setFullScreen',
-        'setMiniPlayer',
-        'setSongDetail'
-      ]),
-      selectMusic(id) {
-        this.setFullScreen(true);
-        this.setMiniPlayer(false);
-        this.setSongDetail([id]);
-      }
+    components: {
+      SongListItem
     }
   }
 </script>

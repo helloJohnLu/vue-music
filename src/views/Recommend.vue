@@ -57,7 +57,30 @@
         .then(data => this.albums = data.albums.splice(0, 6))
         .catch(err => console.log(err));
       getNewSong()
-        .then(data => this.songs = data.result)
+        .then(data => {
+          // this.songs = data.result;
+          // console.log(data.result);
+
+          // 处理返回结果
+          let list = [];
+          data.result.forEach(value => {
+            let obj = {};
+            obj.id = value.id;
+            obj.name = value.name;
+            obj.picUrl = value.song.album.picUrl;
+            let singer = '';
+            for (let i = 0; i < value.song['artists'].length; i++) {
+              if (i === 0) {
+                singer = value.song['artists'][i].name;  // 取出名字
+              } else {
+                singer += ' - ' + value.song['artists'][i].name;
+              }
+            }
+            obj.singer = singer;
+            list.push(obj);
+          });
+          this.songs = list;
+        })
         .catch(err => console.log(err));
     }
   }
