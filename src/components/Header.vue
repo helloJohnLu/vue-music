@@ -2,7 +2,7 @@
   <div class="header" @click="switchTheme">
     <div class="header-left"></div>
     <p class="header-title">John's music list</p>
-    <div class="header-right"></div>
+    <div class="header-right" @click.stop="accoutClick"></div>
   </div>
 </template>
 
@@ -22,6 +22,9 @@
           this.index = 0;
         }
         document.documentElement.setAttribute('data-theme', this.themes[this.index]);
+      },
+      accoutClick() {
+        this.$router.push('/account');
       }
     }
   }
