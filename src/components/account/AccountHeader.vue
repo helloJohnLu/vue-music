@@ -39,6 +39,7 @@
       },
       switchHeaderTab(num) {
         this.switchNum = num;
+        this.$emit('switchTab', num);
       }
     }
   }

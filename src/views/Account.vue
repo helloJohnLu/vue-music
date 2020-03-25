@@ -1,8 +1,8 @@
 <template>
   <transition appear>
     <div class="account">
-      <AccountHeader></AccountHeader>
-      <AccountBottom></AccountBottom>
+      <AccountHeader @switchTab="switchTab"></AccountHeader>
+      <AccountBottom :switchNum="switchNum"></AccountBottom>
     </div>
   </transition>
 </template>
@@ -16,6 +16,16 @@
     components: {
       AccountHeader,
       AccountBottom
+    },
+    data: function () {
+      return {
+        switchNum: 0
+      };
+    },
+    methods: {
+      switchTab(num) {
+        this.switchNum = num;
+      }
     }
   }
 </script>

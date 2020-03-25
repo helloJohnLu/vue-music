@@ -4,12 +4,38 @@
       <span></span>
       <span>播放全部</span>
     </div>
+    <div class="bottom-wrapper">
+      <ScrollView>
+        <SongListItem :songs="switchNum === 0 ? favoriteList : historyList"></SongListItem>
+      </ScrollView>
+    </div>
   </div>
 </template>
 
 <script>
+  import ScrollView from "../ScrollView";
+  import SongListItem from "../SongListItem";
+  import {mapGetters} from "vuex";
+
   export default {
-    name: "AccountBottom"
+    name: "AccountBottom",
+    props: {
+      switchNum: {
+        type: Number,
+        default: 0,
+        required: true
+      }
+    },
+    components: {
+      ScrollView,
+      SongListItem
+    },
+    computed: {
+      ...mapGetters([
+        'favoriteList',
+        'historyList'
+      ])
+    }
   }
 </script>
 
@@ -46,6 +72,16 @@
           margin-right: 20px;
         }
       }
+    }
+
+    .bottom-wrapper {
+      position: fixed;
+      top: 200px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: pink;
+      overflow: hidden;
     }
   }
 </style>
