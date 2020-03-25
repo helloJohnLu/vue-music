@@ -63,13 +63,17 @@
       }
 
       div {
+        width: 70%;
+
         h4 {
           @include font_size($font_large);
           @include font_color();
+          @include no-wrap();
         }
         p {
           @include font_size($font_small);
           @include font_color();
+          @include no-wrap();
           opacity: 0.6;
           margin-top: 20px;
         }

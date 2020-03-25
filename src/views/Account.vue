@@ -31,13 +31,17 @@
 </script>
 
 <style scoped lang="scss">
+  @import "../assets/css/variable";
+  @import "../assets/css/mixin";
+
   .account {
     position: fixed;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: #f00;
+    /*background-color: #f00;*/
+    @include bg_sub_color();
   }
 
   .v-enter, .v-leave-to {

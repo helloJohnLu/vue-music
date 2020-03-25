@@ -49,7 +49,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: skyblue;
+    /*background-color: skyblue;*/
 
     .bottom-play {
       width: 260px;
@@ -80,7 +80,7 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background-color: pink;
+      /*background-color: pink;*/
       overflow: hidden;
     }
   }
