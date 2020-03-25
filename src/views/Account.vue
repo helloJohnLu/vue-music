@@ -2,19 +2,20 @@
   <transition appear>
     <div class="account">
       <AccountHeader></AccountHeader>
+      <AccountBottom></AccountBottom>
     </div>
   </transition>
 </template>
 
 <script>
   import AccountHeader from "../components/account/AccountHeader";
-
-
+  import AccountBottom from "../components/account/AccountBottom";
 
   export default {
     name: "Account",
     components: {
       AccountHeader,
+      AccountBottom
     }
   }
 </script>
