@@ -84,15 +84,18 @@ export default {
   [SET_CLICK_CURRENT_TIME](state, time) {
     state.clickCurrentTime = time;
   },
-  // 收藏歌曲
+  // 收藏/取消收藏 歌曲
   [SET_FAVORITE_SONG](state, song) {
     // 保存歌曲前先遍历数组，看数组中是否有（之前已收藏过）
-    let result = state.favoriteList.find(currentValue => {
-      return currentValue === song;
-    });
+    let result = state.favoriteList.find(currentValue => currentValue.id === song.id);
     // 如果之前没有保存过
     if (result === undefined) {
       state.favoriteList.push(song);
+    } else {
+      let index = state.favoriteList.indexOf(result);
+      if (index !== -1) {
+        state.favoriteList.splice(index, 1);  // 删除收藏歌曲
+      }
     }
   },
   // 收藏歌曲数组更新
