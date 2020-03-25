@@ -2,7 +2,7 @@
   <div class="account-bottom">
     <div class="bottom-play">
       <span></span>
-      <span>播放全部</span>
+      <span @click="selectAllMusic">播放全部</span>
     </div>
     <div class="bottom-wrapper">
       <ScrollView>
@@ -15,7 +15,7 @@
 <script>
   import ScrollView from "../ScrollView";
   import SongListItem from "../SongListItem";
-  import {mapGetters} from "vuex";
+  import {mapGetters, mapActions} from "vuex";
 
   export default {
     name: "AccountBottom",
@@ -35,6 +35,24 @@
         'favoriteList',
         'historyList'
       ])
+    },
+    methods: {
+      ...mapActions([
+        'setFullScreen',
+        'setSongDetail'
+      ]),
+      // 全部播放
+      selectAllMusic() {
+        this.setFullScreen(true);
+        let ids = [];
+        // 判断当前列表是处于哪个选项卡
+        if (this.switchNum === 0) {
+          ids = this.favoriteList.map(item => item.id);
+        } else {
+          ids = this.historyList.map(item => item.id);
+        }
+        this.setSongDetail(ids);
+      }
     }
   }
 </script>
