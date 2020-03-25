@@ -59,6 +59,13 @@
         this.iscroll.on('scroll', function () {
           fn(this.y);
         })
+      },
+      refresh() {
+        setTimeout(() => this.iscroll.refresh(), 100);
+      },
+      // 歌词滚动
+      scrollTo(x, y, time) {
+        this.iscroll.scrollTo(x, y, time);
       }
     }
   }
