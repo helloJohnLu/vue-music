@@ -2,8 +2,8 @@
   <div class="header" @click="switchTheme">
     <div class="header-left" @click.stop="goBack"></div>
     <ul class="header-title">
-      <li class="active">我喜欢的</li>
-      <li>最近听的</li>
+      <li :class="{'active': switchNum === 0}" @click.stop="switchHeaderTab(0)">我喜欢的</li>
+      <li :class="{'active': switchNum === 1}" @click.stop="switchHeaderTab(1)">最近听的</li>
     </ul>
     <div class="header-right"></div>
   </div>
@@ -22,7 +22,8 @@
     data() {
       return {
         themes: ['red', 'green', 'night'],
-        index: 0
+        index: 0,
+        switchNum: 0
       }
     },
     methods: {
@@ -35,6 +36,9 @@
       },
       goBack() {
         window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
+      },
+      switchHeaderTab(num) {
+        this.switchNum = num;
       }
     }
   }
