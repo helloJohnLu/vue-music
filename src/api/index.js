@@ -45,4 +45,29 @@ export const getArtistsByLetter = letter => {
   })
 }
 
+// 根据不同字母并发请求热门歌手数据
+export const getAllArtists = letter => {
+  return new Promise((resolve, reject) => {
+    let keys = ['热'];
+    let list = [getHotArtists()];
+
+    // A-Z 的 ASCII 码
+    for (let i = 65; i < 91; i++) {
+      let char = String.fromCharCode(i);
+      keys.push(char);
+      list.push(getArtistsByLetter(char));
+    }
+
+    // 发请求
+    Network.all(list)
+      .then(response => {
+        let obj = {};
+        obj.keys = keys;
+        obj.list = response;
+        resolve(obj);
+      })
+      .catch(error => reject(error))
+    }
+  );
+};
 
