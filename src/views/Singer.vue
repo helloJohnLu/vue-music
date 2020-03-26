@@ -5,12 +5,13 @@
 </template>
 
 <script>
-  import {getHotArtists} from "../api/index";
+  // import {getHotArtists} from "../api/index";
+  import {getArtistsByLetter} from "../api/index";
 
   export default {
     name: "Singer",
     created() {
-      getHotArtists()
+      getArtistsByLetter('A')
         .then(response => console.log(response))
         .catch(error => console.log(error));
     }

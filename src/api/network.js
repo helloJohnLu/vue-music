@@ -22,4 +22,15 @@ export default {
         .catch(error => reject(error))
     });
   },
+
+  // 并发多个请求
+  all(list) {
+    return new Promise((resolve, reject) => {
+      axios.all(list)
+        .then(axios.spread((...result) => {
+          resolve(result);
+        }))
+        .catch(error => reject(error));
+    });
+  }
 }
