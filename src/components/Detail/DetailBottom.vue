@@ -26,7 +26,8 @@
     methods: {
       ...mapActions([
         'setFullScreen',
-        'setSongDetail'
+        'setSongDetail',
+        'setSelectSong'
       ]),
       selectMusic(id) {
         // this.$store.dispatch('selectMusic', true);
@@ -36,6 +37,9 @@
       // 播放全部
       selectAllMusic() {
         this.setFullScreen(true);
+        // 重置 currentIndex 为 0
+        this.setSelectSong(0);
+        
         let ids = this.playlist.map(item => item.id);
         // console.log(ids);
         this.setSongDetail(ids);

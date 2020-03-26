@@ -39,11 +39,15 @@
     methods: {
       ...mapActions([
         'setFullScreen',
-        'setSongDetail'
+        'setSongDetail',
+        'setSelectSong'
       ]),
       // 全部播放
       selectAllMusic() {
         this.setFullScreen(true);
+        // 重置 currentIndex 为 0
+        this.setSelectSong(0);
+
         let ids = [];
         // 判断当前列表是处于哪个选项卡
         if (this.switchNum === 0) {
