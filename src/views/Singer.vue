@@ -27,7 +27,7 @@
     created() {
       getAllArtists()
         .then(response => {
-          console.log(response);
+          // console.log(response);
           this.keys = response.keys;
           this.list = response.list
         })
@@ -59,6 +59,7 @@
     @include bg_sub_color();
 
     .list-wrapper {
+      /* 注释这两行解决滚动 Bug */
       /*width: 100%;
       height: 100%;*/
 
