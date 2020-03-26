@@ -107,7 +107,15 @@
       currentSong(newValue, oldValue) {
         if (newValue) {
           this.setIsPlaying(false);
-          this.$refs.audio.oncanplay = () => {
+          /**
+           * 注意点：在 IOS 系统中，Safari 浏览器从 5.0 开始不再支持 preload 特性！
+           * 在 PC 与 Android 系统中，浏览器支持 preload 特性，会默认预加载音频/视频资源
+           * 即然 Safari 不支持 preload 特性，歌曲没有预加载，那么 oncanplay 就不会自动执行
+           * 所以这里不能监听 oncanplay 特性，否则在 IOS 上会产生 Bug
+           * 解决方案：监听 ondurationchange 事件
+           *         ondurationchange 当时长发生变化时执行 JavaScript
+           */
+          this.$refs.audio.ondurationchange = () => {
             this.songDuration = this.$refs.audio.duration;  // 获取歌曲时长
             this.setIsPlaying(true);
 
@@ -159,7 +167,7 @@
       this.setHistoryList(historyList);
     },
     mounted() {
-      this.$refs.audio.oncanplay = () => {
+      this.$refs.audio.ondurationchange = () => {
         this.songDuration = this.$refs.audio.duration;  // 获取歌曲时长
       }
     }
