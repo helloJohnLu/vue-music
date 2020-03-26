@@ -13,6 +13,10 @@
         </li>
       </ul>
     </ScrollView>
+    <!--快捷导航-->
+    <ul class="list-keys">
+      <li v-for="key in keys" :key="key">{{key}}</li>
+    </ul>
   </div>
 </template>
 
@@ -93,6 +97,19 @@
             margin-left: 20px;
           }
         }
+      }
+    }
+
+    .list-keys {
+      position: fixed;
+      right: 20px;
+      top: 60%;
+      transform: translateY(-50%);
+
+      li {
+        @include font_size($font_medium_s);
+        @include font_color();
+        padding: 3px 0;
       }
     }
   }
