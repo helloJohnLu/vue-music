@@ -5,8 +5,15 @@
 </template>
 
 <script>
+  import {getHotArtists} from "../api/index";
+
   export default {
-    name: "Singer"
+    name: "Singer",
+    created() {
+      getHotArtists()
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
+    }
   }
 </script>
 
