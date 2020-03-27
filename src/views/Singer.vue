@@ -83,7 +83,7 @@
           this.$refs.group.forEach(item => {
             this.groupsItemTop.push(item.offsetTop);
           });
-          console.log(this.groupsItemTop);
+          // console.log(this.groupsItemTop);
         });
       },
       fixTitle() {
@@ -154,12 +154,12 @@
             } else {
               fixTitleOffsetY = 0;
             }
-            console.log(this.fixTitleOffsetY);
+            // console.log(this.fixTitleOffsetY);
             if (fixTitleOffsetY === this.fixTitleOffsetY) {
               return ;
             }
             this.fixTitleOffsetY = fixTitleOffsetY;
-            console.log(this.$refs.elFixTitle.style.transform = `translateY(${fixTitleOffsetY}px)`);
+            this.$refs.elFixTitle.style.transform = `translateY(${fixTitleOffsetY}px)`;
             return;
           }
         }
