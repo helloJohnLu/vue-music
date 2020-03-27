@@ -1,8 +1,8 @@
 <template>
   <div class="singer">
-    <ScrollView>
+    <ScrollView ref="scrollView">
       <ul class="list-wrapper">
-        <li class="list-group" v-for="(value, index) in keys" :key="index">
+        <li class="list-group" v-for="(value, index) in keys" :key="index" ref="group">
           <h2 class="group-title">{{value}}</h2>
           <ul>
             <li class="group-item" v-for="(v, k) in list[index]" :key="v.id + k + Math.random() * 10000">
@@ -15,7 +15,12 @@
     </ScrollView>
     <!--快捷导航-->
     <ul class="list-keys">
-      <li v-for="key in keys" :key="key">{{key}}</li>
+      <li
+        v-for="(key, index) in keys"
+        :key="key"
+        @click.stop="letterNavClicked(index)"
+        :class="{'active': currentIndex === index}"
+      >{{key}}</li>
     </ul>
   </div>
 </template>
@@ -40,7 +45,33 @@
     data: function () {
       return {
         keys: [],
-        list: []
+        list: [],
+        groupsItemTop: [],  // 每一组数据距离顶部的距离
+        currentIndex: 0
+      }
+    },
+    watch: {
+      list() {
+        // console.log(this.$refs.group);  // 拿不到数据，因为数据即使发生变化但没有渲染完
+        /*
+        * 注意点：watch 只能监听数据变化，数据变化的时候并不意味着已经渲染完毕
+        *       在保证在数据渲染完毕后再获取数据，需要使用 vm.$nextTick([callback]) 方法
+        * vm.$nextTick([callback])：将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新。
+        */
+        this.$nextTick(() => {
+          this.$refs.group.forEach(item => {
+            this.groupsItemTop.push(item.offsetTop);
+          });
+          console.log(this.groupsItemTop);
+        });
+
+      }
+    },
+    methods: {
+      letterNavClicked(index) {
+        this.currentIndex = index;
+        let offsetY = this.groupsItemTop[index];
+        this.$refs.scrollView.scrollTo(0, -offsetY);
       }
     },
     components: {
@@ -103,13 +134,17 @@
     .list-keys {
       position: fixed;
       right: 20px;
-      top: 60%;
+      top: 56%;
       transform: translateY(-50%);
 
       li {
         @include font_size($font_medium_s);
         @include font_color();
         padding: 3px 0;
+
+        &.active {
+          text-shadow: 0 0 10px #000;
+        }
       }
     }
   }
