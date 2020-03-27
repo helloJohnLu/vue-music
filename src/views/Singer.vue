@@ -108,6 +108,27 @@
         this.letterNavClicked(index);
       }
     },
+    mounted() {
+      // 监听滚动
+      this.$refs.scrollView.scrolling(y => {
+        // 处理第一个 item ：向下滚动，始终是第一组
+        if (y >= 0) {
+          return this.currentIndex = 0;
+        }
+        // 中间区域
+        for (let i = 0, len = this.groupsItemTop.length - 1; i < len; i++) {
+          let preTop = this.groupsItemTop[i];
+          let nextTop = this.groupsItemTop[i + 1];
+          // 如果滚上去的距离处于两个元素距离之间
+          if (-y >= preTop && -y < nextTop) {
+            this.currentIndex = i;
+            return ;
+          }
+        }
+        // 最后一个 item
+        this.currentIndex = this.groupsItemTop.length - 1;
+      })
+    },
     components: {
       ScrollView
     }
