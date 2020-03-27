@@ -12,7 +12,7 @@
           </ul>
         </li>
       </ul>
-      <div class="fix-title" v-show="fixTitle && flag" ref="fixtitle">{{fixTitle}}</div>
+      <div class="fix-title" v-show="fixTitle && flag" ref="elFixTitle">{{fixTitle}}</div>
     </ScrollView>
     <!--快捷导航-->
     <ul class="list-keys">
@@ -85,6 +85,12 @@
           });
           console.log(this.groupsItemTop);
         });
+      },
+      fixTitle() {
+        // 渲染完毕后再获取高度
+        this.$nextTick(() => {
+          this.fixTitleHeight = this.$refs.elFixTitle.offsetHeight;
+        });
       }
     },
     methods: {
@@ -130,14 +136,34 @@
         }
 
         // 中间区域
-        for (let i = 0, len = this.groupsItemTop.length - 1; i < len; i++) {
+        for (let i = 0; i < this.groupsItemTop.length - 1; i++) {
           let preTop = this.groupsItemTop[i];
           let nextTop = this.groupsItemTop[i + 1];
+
           // 如果滚上去的距离处于两个元素距离之间
-          if (-y > preTop && -y < nextTop) {
-            return this.currentIndex = i;
+          if (-y >= preTop && -y <= nextTop) {
+            this.currentIndex = i;
+
+            // 下一组标题的偏移量 + 当前滚动出去的偏移量
+            let diffOffsetY = nextTop + y;
+            let fixTitleOffsetY = 0;  // 标题需要移动的偏移量
+            // 判断计算的结果是否是 0 ~ 分组标题高度的值
+            if (diffOffsetY <= this.fixTitleHeight && diffOffsetY >= 0) {
+              fixTitleOffsetY = diffOffsetY - this.fixTitleHeight;
+              // console.log(fixTitleOffsetY);
+            } else {
+              fixTitleOffsetY = 0;
+            }
+            console.log(this.fixTitleOffsetY);
+            if (fixTitleOffsetY === this.fixTitleOffsetY) {
+              return ;
+            }
+            this.fixTitleOffsetY = fixTitleOffsetY;
+            console.log(this.$refs.elFixTitle.style.transform = `translateY(${fixTitleOffsetY}px)`);
+            return;
           }
         }
+
         // 最后一个 item
         return this.currentIndex = this.groupsItemTop.length - 1;
       }), 100);
@@ -171,16 +197,18 @@
           @include bg_color();
           @include font_size($font_medium);
           color: #fff;
-          padding: 10px 20px;
+          padding: 0 20px;
           box-sizing: border-box;
           text-align: center;
+          height: 60px;
+          line-height: 60px;
         }
 
         .group-item {
           display: flex;
           justify-content: flex-start;
           align-items: center;
-          padding: 10px 20px;
+          padding: 0 20px;
           border-bottom: 1px solid #ccc;
 
           img {
@@ -224,9 +252,11 @@
       @include bg_color();
       @include font_size($font_medium);
       color: #fff;
-      padding: 10px 20px;
+      padding: 0 20px;
       box-sizing: border-box;
       text-align: center;
+      height: 60px;
+      line-height: 60px;
     }
 
   }
