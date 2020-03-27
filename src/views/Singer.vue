@@ -12,6 +12,7 @@
           </ul>
         </li>
       </ul>
+      <div class="fix-title" v-show="fixTitle && flag" ref="fixtitle">{{fixTitle}}</div>
     </ScrollView>
     <!--快捷导航-->
     <ul class="list-keys">
@@ -31,7 +32,8 @@
         @touchstart.stop.prevent="touchstart"
         @touchmove.stop.prevent="touchmove"
         :class="{'active': currentIndex === index}"
-      >{{key}}</li>
+      >{{key}}
+      </li>
     </ul>
   </div>
 </template>
@@ -60,7 +62,13 @@
         groupsItemTop: [],  // 每一组数据距离顶部的距离
         currentIndex: 0,
         beginOffsetY: 0,
-        moveOffsetY: 0
+        moveOffsetY: 0,
+        flag: true
+      }
+    },
+    computed: {
+      fixTitle() {
+        return this.keys[this.currentIndex];
       }
     },
     watch: {
@@ -77,7 +85,6 @@
           });
           console.log(this.groupsItemTop);
         });
-
       }
     },
     methods: {
@@ -88,7 +95,7 @@
       },
       touchstart(e) {
         // console.log(e.target.dataset.index);
-        let index = Number(e.target.dataset.index);
+        let index = parseInt(e.target.dataset.index);
         this.letterNavClicked(index);
 
         this.beginOffsetY = e.touches[0].pageY;
@@ -98,7 +105,7 @@
         this.moveOffsetY = e.touches[0].pageY;
         let offsetY = (this.moveOffsetY - this.beginOffsetY) / e.target.offsetHeight;  // 除以每个元素的高度
         // console.log(offsetY);
-        let index = Number(e.target.dataset.index) + Math.floor(offsetY);
+        let index = parseInt(e.target.dataset.index) + Math.floor(offsetY);
         if (index < 0) {
           index = 0;
         } else if (index > this.keys.length - 1) {
@@ -115,14 +122,19 @@
 
         // 处理第一个 item ：向下滚动，始终是第一组
         if (y >= 0) {
-          return this.currentIndex = 0;
+          this.currentIndex = 0;
+          this.flag = false;
+          return;
+        } else {
+          this.flag = true;
         }
+
         // 中间区域
         for (let i = 0, len = this.groupsItemTop.length - 1; i < len; i++) {
           let preTop = this.groupsItemTop[i];
           let nextTop = this.groupsItemTop[i + 1];
           // 如果滚上去的距离处于两个元素距离之间
-          if (-y >= preTop && -y < nextTop) {
+          if (-y > preTop && -y < nextTop) {
             return this.currentIndex = i;
           }
         }
@@ -203,5 +215,19 @@
         }
       }
     }
+
+    .fix-title {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      @include bg_color();
+      @include font_size($font_medium);
+      color: #fff;
+      padding: 10px 20px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
   }
 </style>
