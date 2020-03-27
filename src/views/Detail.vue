@@ -78,7 +78,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    @include bg_color();
+    @include bg_sub_color();
 
     .bottom {
       position: fixed;

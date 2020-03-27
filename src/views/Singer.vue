@@ -5,7 +5,12 @@
         <li class="list-group" v-for="(value, index) in keys" :key="index" ref="group">
           <h2 class="group-title">{{value}}</h2>
           <ul>
-            <li class="group-item" v-for="(v, k) in list[index]" :key="v.id + k + Math.random() * 10000">
+            <li
+              class="group-item"
+              v-for="(v, k) in list[index]"
+              :key="v.id + k + Math.random() * 10000"
+              @click.stop="goToSinger(v.id)"
+            >
               <img v-lazy="v.picUrl" alt="">
               <p>{{v.name}}</p>
             </li>
@@ -35,6 +40,9 @@
       >{{key}}
       </li>
     </ul>
+    <transition>
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -119,6 +127,10 @@
         }
         // 滚动
         this.letterNavClicked(index);
+      },
+      // 点击歌手跳转到歌手详情界面
+      goToSinger(id) {
+        this.$router.push(`/singer/detail/${id}/singer`);
       }
     },
     mounted() {
@@ -208,7 +220,7 @@
           display: flex;
           justify-content: flex-start;
           align-items: center;
-          padding: 0 20px;
+          padding: 10px 20px;
           border-bottom: 1px solid #ccc;
 
           img {
@@ -259,5 +271,14 @@
       line-height: 60px;
     }
 
+    .v-enter, .v-leave-to {
+      transform: translateX(100%);
+    }
+    .v-enter-to, .v-leave {
+      transform: translateX(0%);
+    }
+    .v-enter-active, .v-leave-active {
+      transition: transform 1s;
+    }
   }
 </style>
