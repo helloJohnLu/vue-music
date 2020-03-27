@@ -15,10 +15,21 @@
     </ScrollView>
     <!--快捷导航-->
     <ul class="list-keys">
+      <!--
       <li
         v-for="(key, index) in keys"
         :key="key"
         @click.stop="letterNavClicked(index)"
+        :class="{'active': currentIndex === index}"
+      >{{key}}</li>
+      -->
+
+      <li
+        v-for="(key, index) in keys"
+        :key="key"
+        :data-index="index"
+        @touchstart.stop.prevent="touchstart"
+        @touchmove.stop.prevent="touchmove"
         :class="{'active': currentIndex === index}"
       >{{key}}</li>
     </ul>
@@ -47,7 +58,9 @@
         keys: [],
         list: [],
         groupsItemTop: [],  // 每一组数据距离顶部的距离
-        currentIndex: 0
+        currentIndex: 0,
+        beginOffsetY: 0,
+        moveOffsetY: 0
       }
     },
     watch: {
@@ -72,6 +85,27 @@
         this.currentIndex = index;
         let offsetY = this.groupsItemTop[index];
         this.$refs.scrollView.scrollTo(0, -offsetY);
+      },
+      touchstart(e) {
+        // console.log(e.target.dataset.index);
+        let index = Number(e.target.dataset.index);
+        this.letterNavClicked(index);
+
+        this.beginOffsetY = e.touches[0].pageY;
+      },
+      // 滑动导航滚动界面
+      touchmove(e) {
+        this.moveOffsetY = e.touches[0].pageY;
+        let offsetY = (this.moveOffsetY - this.beginOffsetY) / e.target.offsetHeight;  // 除以每个元素的高度
+        // console.log(offsetY);
+        let index = Number(e.target.dataset.index) + Math.floor(offsetY);
+        if (index < 0) {
+          index = 0;
+        } else if (index > this.keys.length - 1) {
+          index = this.keys.length - 1;
+        }
+        // 滚动
+        this.letterNavClicked(index);
       }
     },
     components: {
