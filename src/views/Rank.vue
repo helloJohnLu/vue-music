@@ -19,12 +19,13 @@
             </li>
           </ul>
           <ul class="other-group" v-else>  <!-- 其它组数据 -->
-            <li>
+            <li v-for="obj in category[key]" :key="obj.rank.id">
               <div class="rank-top">
-                <img v-lazy="" alt="">
+                <img v-lazy="obj.rank.coverImgUrl" alt="">
+                <p>{{obj.rank.updateFrequency}}</p>
               </div>
               <div class="rank-bottom">
-
+                <p>{{obj.rank.name}}</p>
               </div>
             </li>
           </ul>
@@ -70,6 +71,7 @@
     top: 184px;
     bottom: 0;
     @include bg_sub_color();
+    overflow: hidden;
 
     .group-title {
       padding: 10px 20px;
@@ -110,6 +112,46 @@
             @include font_color();
             @include font_size($font_medium);
             padding: 12px 0;
+          }
+        }
+      }
+    }
+
+    .other-group {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      li {
+        padding: 10px 20px;
+        box-sizing: border-box;
+
+        .rank-top {
+          position: relative;
+
+          img {
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+          }
+
+          p {
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            color: #fff;
+            @include font_size($font_medium_s);
+          }
+        }
+
+        .rank-bottom {
+          width: 200px;
+          @include no-wrap();
+
+          p {
+            @include font_color();
+            @include font_size($font_medium);
+            padding: 10px 0;
           }
         }
       }
