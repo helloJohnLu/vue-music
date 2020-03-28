@@ -6,7 +6,7 @@
           <h3 class="group-title">{{value}}</h3>
           <!-- 第一组数据（布局不一样） -->
           <ul class="normal-group" v-if="value === '官方榜'">
-            <li v-for="obj in category[key]" :key="obj.rank.id">
+            <li v-for="obj in category[key]" :key="obj.rank.id" @click.stop="selectedItem(obj.id)">
               <div class="rank-left">
                 <img v-lazy="obj.rank.coverImgUrl" alt="">
                 <p>{{obj.rank.updateFrequency}}</p>
@@ -19,7 +19,7 @@
             </li>
           </ul>
           <ul class="other-group" v-else>  <!-- 其它组数据 -->
-            <li v-for="obj in category[key]" :key="obj.rank.id">
+            <li v-for="obj in category[key]" :key="obj.rank.id" @click.stop="selectedItem(obj.id)">
               <div class="rank-top">
                 <img v-lazy="obj.rank.coverImgUrl" alt="">
                 <p>{{obj.rank.updateFrequency}}</p>
@@ -32,6 +32,9 @@
         </li>
       </ul>
     </ScrollView>
+    <transition>
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -49,10 +52,15 @@
         category: {}
       }
     },
+    methods: {
+      selectedItem(id) {
+        this.$router.push(`/rank/detail/${id}/rank`);
+      }
+    },
     created() {
       getTopListDetail()
         .then(data => {
-          console.log(data);
+          // console.log(data);
           this.category = data;
         })
         .catch(error => console.log(error));
@@ -156,5 +164,15 @@
         }
       }
     }
+  }
+
+  .v-enter, .v-leave-to {
+    transform: translateX(100%);
+  }
+  .v-enter-to, .v-leave {
+    transform: translateX(0%);
+  }
+  .v-enter-active, .v-leave-active {
+    transition: transform 1s;
   }
 </style>

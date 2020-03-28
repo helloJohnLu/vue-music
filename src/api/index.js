@@ -72,7 +72,7 @@ export const getAllArtists = letter => {
   );
 };
 
-// 排行榜数据
+// 排行榜数据 内容摘要
 export const getTopListDetail = () => {
   return new Promise((resolve, reject) => {
     // 对数据进行自定义分类
@@ -126,3 +126,5 @@ export const getTopListDetail = () => {
       .catch(error => reject(error));
   })
 };
+// 排单数据
+export const getToplist = (data) => Network.get('/top/list', data)
