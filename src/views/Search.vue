@@ -9,11 +9,11 @@
     <div class="search-suggest" v-show="keywords !== ''">
       <ScrollView>
         <ul>
-          <li>
+          <li v-for="value in songs" :key="value.id">
             <img
               src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNiAyNiI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsPSIjYzljOWNhIiBkPSJNMjUuMTgxIDIzLjUzNWwtMS40MTQgMS40MTQtNy4zMTUtNy4zMTRBOS45NjYgOS45NjYgMCAwIDEgMTAgMjBDNC40NzcgMjAgMCAxNS41MjMgMCAxMFM0LjQ3NyAwIDEwIDBzMTAgNC40NzcgMTAgMTBjMCAyLjM0Mi0uODExIDQuNDktMi4xNiA2LjE5NWw3LjM0MSA3LjM0ek0xMCAyYTggOCAwIDEgMCAwIDE2IDggOCAwIDAgMCAwLTE2eiIvPjwvc3ZnPg=="
               alt="">
-            <p>江南 —— 林俊杰</p>
+            <p>{{value.name}} —— {{value.artists[0].name}}</p>
           </li>
         </ul>
       </ScrollView>
@@ -23,6 +23,7 @@
 
 <script>
   import ScrollView from "../components/ScrollView";
+  import {getSearchList} from "../api/index";
 
   export default {
     name: "Search",
@@ -31,12 +32,18 @@
     },
     data: function () {
       return {
-        keywords: ''
+        keywords: '',
+        songs: []
       }
     },
     methods: {
       search() {
-        console.log('send request')
+        getSearchList({keywords: this.keywords})
+          .then(data => {
+            console.log(data);
+            this.songs = data.result.songs;
+          })
+          .catch(error => console.log(error));
       }
     },
     directives: {
