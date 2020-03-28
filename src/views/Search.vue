@@ -22,7 +22,7 @@
     <div class="search-hot">
       <h3>热门搜索</h3>
       <ul>
-        <li v-for="value in hots" :key="value.first">{{value.first}}</li>
+        <li v-for="value in hots" :key="value.first" @click.stop="selectedHot(value.first)">{{value.first}}</li>
       </ul>
     </div>
   </div>
@@ -59,10 +59,16 @@
       search() {
         getSearchList({keywords: this.keywords})
           .then(data => {
-            console.log(data);
+            // console.log(data);
             this.songs = data.result.songs;
           })
           .catch(error => console.log(error));
+      },
+      // 点选了热搜
+      selectedHot(value) {
+        this.keywords = value;
+        // 手动触发 search() 方法
+        this.search();
       }
     },
     directives: {
@@ -137,6 +143,7 @@
       top: 300px;
       bottom: 0;
       overflow: hidden;
+      @include bg_sub_color();
 
       li {
         display: flex;
