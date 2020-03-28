@@ -18,12 +18,19 @@
         </ul>
       </ScrollView>
     </div>
+    <!--热闹搜索-->
+    <div class="search-hot">
+      <h3>热门搜索</h3>
+      <ul>
+        <li v-for="value in hots" :key="value.first">{{value.first}}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
   import ScrollView from "../components/ScrollView";
-  import {getSearchList} from "../api/index";
+  import {getSearchList, getSearchHot} from "../api/index";
   import {mapActions} from "vuex";
 
   export default {
@@ -34,7 +41,8 @@
     data: function () {
       return {
         keywords: '',
-        songs: []
+        songs: [],
+        hots: []
       }
     },
     methods: {
@@ -73,6 +81,14 @@
           });
         }
       }
+    },
+    created() {
+      getSearchHot()
+        .then(data => {
+          // console.log(data);
+          this.hots = data.result.hots;
+        })
+        .catch(error => console.log(error));
     }
   }
 </script>
@@ -138,6 +154,30 @@
           margin-left: 20px;
           @include font_size($font_medium);
           @include font_color();
+        }
+      }
+    }
+
+    .search-hot {
+      h3 {
+        @include font_size($font_large);
+        @include font_color();
+        padding: 10px 20px;
+      }
+
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+
+        li {
+          height: 60px;
+          line-height: 60px;
+          border: 1px solid #000;
+          border-radius: 30px;
+          padding: 0 20px;
+          margin: 10px 20px;
+          @include font_color();
+          @include font_size($font_medium_s);
         }
       }
     }
