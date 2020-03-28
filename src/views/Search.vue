@@ -25,6 +25,18 @@
         <li v-for="value in hots" :key="value.first" @click.stop="selectedHot(value.first)">{{value.first}}</li>
       </ul>
     </div>
+    <!--搜索历史-->
+    <ul class="search-history">
+      <li v-for="value in searchHistory" :key="value">
+        <div class="history-left">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAzMCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsPSIjYzljYWNhIiBkPSJNMTUgMzBDNi43MTYgMzAgMCAyMy4yODQgMCAxNVM2LjcxNiAwIDE1IDBzMTUgNi43MTYgMTUgMTUtNi43MTYgMTUtMTUgMTVtMC0yOEM3LjgyIDIgMiA3LjgyIDIgMTVzNS44MiAxMyAxMyAxMyAxMy01LjgyIDEzLTEzUzIyLjE4IDIgMTUgMm03IDE2aC04YTEgMSAwIDAgMS0xLTFWN2ExIDEgMCAxIDEgMiAwdjloN2ExIDEgMCAxIDEgMCAyIi8+PC9zdmc+" alt="">
+          <p>{{value}}</p>
+        </div>
+        <div class="history-right">
+          <img @click.stop="delHistory(value)" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsPSIjOTk5ODk5IiBkPSJNMTMuMzc5IDEybDEwLjMzOCAxMC4zMzdhLjk3NS45NzUgMCAxIDEtMS4zNzggMS4zNzlMMTIuMDAxIDEzLjM3OCAxLjY2MyAyMy43MTZhLjk3NC45NzQgMCAxIDEtMS4zNzgtMS4zNzlMMTAuNjIzIDEyIC4yODUgMS42NjJBLjk3NC45NzQgMCAxIDEgMS42NjMuMjg0bDEwLjMzOCAxMC4zMzhMMjIuMzM5LjI4NGEuOTc0Ljk3NCAwIDEgMSAxLjM3OCAxLjM3OEwxMy4zNzkgMTIiLz48L3N2Zz4=" alt="">
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -32,6 +44,7 @@
   import ScrollView from "../components/ScrollView";
   import {getSearchList, getSearchHot} from "../api/index";
   import {mapActions} from "vuex";
+  import {setlocalStorage, getlocalStorage} from "../tools/tools";
 
   export default {
     name: "Search",
@@ -42,7 +55,8 @@
       return {
         keywords: '',
         songs: [],
-        hots: []
+        hots: [],
+        searchHistory: []
       }
     },
     methods: {
@@ -55,6 +69,16 @@
         this.setFullScreen(true);
         this.setMiniPlayer(false);
         this.setSongDetail([id]);
+
+        // 保存搜索历史
+        if (this.searchHistory.includes(this.keywords)) {  // 如果这条记录已保存
+          return;
+        }
+        // 如果没有保存
+        this.searchHistory.push(this.keywords);
+        // 写入本地
+        setlocalStorage('searchHistory', this.searchHistory);
+        this.keywords = '';  // 清空
       },
       search() {
         getSearchList({keywords: this.keywords})
@@ -69,6 +93,13 @@
         this.keywords = value;
         // 手动触发 search() 方法
         this.search();
+      },
+      // 删除历史记录
+      delHistory(value) {
+        let index = this.searchHistory.indexOf(value);
+        this.searchHistory.splice(index, 1);
+        setlocalStorage('searchHistory', this.searchHistory);
+        console.log(this.searchHistory);
       }
     },
     directives: {
@@ -89,12 +120,21 @@
       }
     },
     created() {
+      // 热搜数据
       getSearchHot()
         .then(data => {
           // console.log(data);
           this.hots = data.result.hots;
         })
         .catch(error => console.log(error));
+
+      // 搜索历史
+      // 如果本地没有
+      if (getlocalStorage('searchHistory') === undefined || getlocalStorage('searchHistory') === null) {
+        return;
+      }
+      // 如果本地储存有搜索历史数据
+      this.searchHistory = getlocalStorage('searchHistory');
     }
   }
 </script>
@@ -185,6 +225,41 @@
           margin: 10px 20px;
           @include font_color();
           @include font_size($font_medium_s);
+        }
+      }
+    }
+
+    .search-history {
+      margin-top: 20px;
+
+      li {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 20px;
+        box-sizing: border-box;
+        border-bottom: 1px solid #ccc;
+
+        .history-left {
+          display: flex;
+          align-items: center;
+
+          img {
+            width: 40px;
+            height: 40px;
+          }
+
+          p {
+            @include font_color();
+            @include font_size($font_medium_s);
+            margin-left: 20px;
+          }
+        }
+
+        .history-right {
+          img {
+            width: 30px;
+            height: 30px;
+          }
         }
       }
     }
