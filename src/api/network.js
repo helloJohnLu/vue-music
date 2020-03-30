@@ -2,7 +2,8 @@ import axios from "axios";
 import Vue from "vue";
 
 // 全局配置
-axios.defaults.baseURL = 'http://127.0.0.1:3000'
+// axios.defaults.baseURL = 'http://127.0.0.1:3000'
+axios.defaults.baseURL = 'http://47.88.153.199:4000'
 axios.defaults.timeout = 3000
 
 let requestCount = 0;  // 发送请求数
