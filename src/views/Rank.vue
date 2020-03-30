@@ -1,37 +1,39 @@
 <template>
   <div class="rank">
-    <ScrollView>
-      <ul>
-        <li v-for="(value, key) in category.titles" :key="key">
-          <h3 class="group-title">{{value}}</h3>
-          <!-- 第一组数据（布局不一样） -->
-          <ul class="normal-group" v-if="value === '官方榜'">
-            <li v-for="obj in category[key]" :key="obj.rank.id" @click.stop="selectedItem(obj.id)">
-              <div class="rank-left">
-                <img v-lazy="obj.rank.coverImgUrl" alt="">
-                <p>{{obj.rank.updateFrequency}}</p>
-              </div>
-              <div class="rank-right">
-                <p v-for="(song, index) in obj.rank.tracks" :key="song.first">
-                  {{index}}. {{song.first}} - {{song.second}}
-                </p>
-              </div>
-            </li>
-          </ul>
-          <ul class="other-group" v-else>  <!-- 其它组数据 -->
-            <li v-for="obj in category[key]" :key="obj.rank.id" @click.stop="selectedItem(obj.id)">
-              <div class="rank-top">
-                <img v-lazy="obj.rank.coverImgUrl" alt="">
-                <p>{{obj.rank.updateFrequency}}</p>
-              </div>
-              <div class="rank-bottom">
-                <p>{{obj.rank.name}}</p>
-              </div>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </ScrollView>
+    <div class="rank-wrapper">
+      <ScrollView>
+        <ul>
+          <li v-for="(value, key) in category.titles" :key="key">
+            <h3 class="group-title">{{value}}</h3>
+            <!-- 第一组数据（布局不一样） -->
+            <ul class="normal-group" v-if="value === '官方榜'">
+              <li v-for="obj in category[key]" :key="obj.rank.id" @click.stop="selectedItem(obj.id)">
+                <div class="rank-left">
+                  <img v-lazy="obj.rank.coverImgUrl" alt="">
+                  <p>{{obj.rank.updateFrequency}}</p>
+                </div>
+                <div class="rank-right">
+                  <p v-for="(song, index) in obj.rank.tracks" :key="song.first">
+                    {{index}}. {{song.first}} - {{song.second}}
+                  </p>
+                </div>
+              </li>
+            </ul>
+            <ul class="other-group" v-else>  <!-- 其它组数据 -->
+              <li v-for="obj in category[key]" :key="obj.rank.id" @click.stop="selectedItem(obj.id)">
+                <div class="rank-top">
+                  <img v-lazy="obj.rank.coverImgUrl" alt="">
+                  <p>{{obj.rank.updateFrequency}}</p>
+                </div>
+                <div class="rank-bottom">
+                  <p>{{obj.rank.name}}</p>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </ScrollView>
+    </div>
     <transition>
       <router-view></router-view>
     </transition>
@@ -73,93 +75,98 @@
   @import "../assets/css/mixin";
 
   .rank {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 184px;
-    bottom: 0;
-    @include bg_sub_color();
-    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    
+    .rank-wrapper {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 184px;
+      bottom: 0;
+      @include bg_sub_color();
+      overflow: hidden;
 
-    .group-title {
-      padding: 10px 20px;
-      @include font_color();
-      @include font_size($font_large);
-      font-weight: bold;
-    }
-
-    .normal-group {
-      li {
-        display: flex;
-        align-items: center;
+      .group-title {
         padding: 10px 20px;
-        box-sizing: border-box;
+        @include font_color();
+        @include font_size($font_large);
+        font-weight: bold;
+      }
 
-        .rank-left {
-          position: relative;
+      .normal-group {
+        li {
+          display: flex;
+          align-items: center;
+          padding: 10px 20px;
+          box-sizing: border-box;
 
-          img {
-            width: 200px;
-            height: 200px;
-            border-radius: 10px;
+          .rank-left {
+            position: relative;
+
+            img {
+              width: 200px;
+              height: 200px;
+              border-radius: 10px;
+            }
+
+            p {
+              position: absolute;
+              left: 10px;
+              bottom: 10px;
+              color: #fff;
+              @include font_size($font_medium_s);
+            }
           }
 
-          p {
-            position: absolute;
-            left: 10px;
-            bottom: 10px;
-            color: #fff;
-            @include font_size($font_medium_s);
-          }
-        }
+          .rank-right {
+            margin-left: 20px;
 
-        .rank-right {
-          margin-left: 20px;
-
-          p {
-            @include font_color();
-            @include font_size($font_medium);
-            padding: 12px 0;
+            p {
+              @include font_color();
+              @include font_size($font_medium);
+              padding: 12px 0;
+            }
           }
         }
       }
-    }
 
-    .other-group {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
+      .other-group {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
 
-      li {
-        padding: 10px 20px;
-        box-sizing: border-box;
+        li {
+          padding: 10px 20px;
+          box-sizing: border-box;
 
-        .rank-top {
-          position: relative;
+          .rank-top {
+            position: relative;
 
-          img {
+            img {
+              width: 200px;
+              height: 200px;
+              border-radius: 10px;
+            }
+
+            p {
+              position: absolute;
+              left: 10px;
+              bottom: 10px;
+              color: #fff;
+              @include font_size($font_medium_s);
+            }
+          }
+
+          .rank-bottom {
             width: 200px;
-            height: 200px;
-            border-radius: 10px;
-          }
+            @include no-wrap();
 
-          p {
-            position: absolute;
-            left: 10px;
-            bottom: 10px;
-            color: #fff;
-            @include font_size($font_medium_s);
-          }
-        }
-
-        .rank-bottom {
-          width: 200px;
-          @include no-wrap();
-
-          p {
-            @include font_color();
-            @include font_size($font_medium);
-            padding: 10px 0;
+            p {
+              @include font_color();
+              @include font_size($font_medium);
+              padding: 10px 0;
+            }
           }
         }
       }

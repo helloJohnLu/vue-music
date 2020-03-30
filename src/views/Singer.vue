@@ -1,45 +1,47 @@
 <template>
   <div class="singer">
-    <ScrollView ref="scrollView">
-      <ul class="list-wrapper">
-        <li class="list-group" v-for="(value, index) in keys" :key="index" ref="group">
-          <h2 class="group-title">{{value}}</h2>
-          <ul>
-            <li
-              class="group-item"
-              v-for="(v, k) in list[index]"
-              :key="v.id + k + Math.random() * 10000"
-              @click.stop="goToSinger(v.id)"
-            >
-              <img v-lazy="v.picUrl" alt="">
-              <p>{{v.name}}</p>
-            </li>
-          </ul>
+    <div class="singer-wrapper">
+      <ScrollView ref="scrollView">
+        <ul class="list-wrapper">
+          <li class="list-group" v-for="(value, index) in keys" :key="index" ref="group">
+            <h2 class="group-title">{{value}}</h2>
+            <ul>
+              <li
+                class="group-item"
+                v-for="(v, k) in list[index]"
+                :key="v.id + k + Math.random() * 10000"
+                @click.stop="goToSinger(v.id)"
+              >
+                <img v-lazy="v.picUrl" alt="">
+                <p>{{v.name}}</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="fix-title" v-show="fixTitle && flag" ref="elFixTitle">{{fixTitle}}</div>
+      </ScrollView>
+      <!--快捷导航-->
+      <ul class="list-keys">
+        <!--
+        <li
+          v-for="(key, index) in keys"
+          :key="key"
+          @click.stop="letterNavClicked(index)"
+          :class="{'active': currentIndex === index}"
+        >{{key}}</li>
+        -->
+
+        <li
+          v-for="(key, index) in keys"
+          :key="key"
+          :data-index="index"
+          @touchstart.stop.prevent="touchstart"
+          @touchmove.stop.prevent="touchmove"
+          :class="{'active': currentIndex === index}"
+        >{{key}}
         </li>
       </ul>
-      <div class="fix-title" v-show="fixTitle && flag" ref="elFixTitle">{{fixTitle}}</div>
-    </ScrollView>
-    <!--快捷导航-->
-    <ul class="list-keys">
-      <!--
-      <li
-        v-for="(key, index) in keys"
-        :key="key"
-        @click.stop="letterNavClicked(index)"
-        :class="{'active': currentIndex === index}"
-      >{{key}}</li>
-      -->
-
-      <li
-        v-for="(key, index) in keys"
-        :key="key"
-        :data-index="index"
-        @touchstart.stop.prevent="touchstart"
-        @touchmove.stop.prevent="touchmove"
-        :class="{'active': currentIndex === index}"
-      >{{key}}
-      </li>
-    </ul>
+    </div>
     <transition>
       <router-view></router-view>
     </transition>
@@ -191,94 +193,99 @@
   @import "../assets/css/mixin";
 
   .singer {
-    position: fixed;
-    overflow: hidden;
-    top: 184px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    @include bg_sub_color();
+    width: 100%;
+    height: 100%;
 
-    .list-wrapper {
-      /* 注释这两行解决滚动 Bug */
-      /*width: 100%;
-      height: 100%;*/
-
-      .list-group {
-        .group-title {
-          @include bg_color();
-          @include font_size($font_medium);
-          color: #fff;
-          padding: 0 20px;
-          box-sizing: border-box;
-          text-align: center;
-          height: 60px;
-          line-height: 60px;
-        }
-
-        .group-item {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          padding: 10px 20px;
-          border-bottom: 1px solid #ccc;
-
-          img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            overflow: hidden;
-          }
-
-          p {
-            @include font_size($font_medium);
-            @include font_color();
-            margin-left: 20px;
-          }
-        }
-      }
-    }
-
-    .list-keys {
+    .singer-wrapper{
       position: fixed;
-      right: 20px;
-      top: 56%;
-      transform: translateY(-50%);
-
-      li {
-        @include font_size($font_medium_s);
-        @include font_color();
-        padding: 3px 0;
-
-        &.active {
-          text-shadow: 0 0 10px #000;
-        }
-      }
-    }
-
-    .fix-title {
-      position: absolute;
+      overflow: hidden;
+      top: 184px;
+      bottom: 0;
       left: 0;
       right: 0;
-      top: 0;
-      @include bg_color();
-      @include font_size($font_medium);
-      color: #fff;
-      padding: 0 20px;
-      box-sizing: border-box;
-      text-align: center;
-      height: 60px;
-      line-height: 60px;
-    }
+      @include bg_sub_color();
 
-    .v-enter, .v-leave-to {
-      transform: translateX(100%);
+      .list-wrapper {
+        /* 注释这两行解决滚动 Bug */
+        /*width: 100%;
+        height: 100%;*/
+
+        .list-group {
+          .group-title {
+            @include bg_color();
+            @include font_size($font_medium);
+            color: #fff;
+            padding: 0 20px;
+            box-sizing: border-box;
+            text-align: center;
+            height: 60px;
+            line-height: 60px;
+          }
+
+          .group-item {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ccc;
+
+            img {
+              width: 100px;
+              height: 100px;
+              border-radius: 50%;
+              overflow: hidden;
+            }
+
+            p {
+              @include font_size($font_medium);
+              @include font_color();
+              margin-left: 20px;
+            }
+          }
+        }
+      }
+
+      .list-keys {
+        position: fixed;
+        right: 20px;
+        top: 56%;
+        transform: translateY(-50%);
+
+        li {
+          @include font_size($font_medium_s);
+          @include font_color();
+          padding: 3px 0;
+
+          &.active {
+            text-shadow: 0 0 10px #000;
+          }
+        }
+      }
+
+      .fix-title {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        @include bg_color();
+        @include font_size($font_medium);
+        color: #fff;
+        padding: 0 20px;
+        box-sizing: border-box;
+        text-align: center;
+        height: 60px;
+        line-height: 60px;
+      }
     }
-    .v-enter-to, .v-leave {
-      transform: translateX(0%);
-    }
-    .v-enter-active, .v-leave-active {
-      transition: transform 1s;
-    }
+  }
+
+  .v-enter, .v-leave-to {
+    transform: translateX(100%);
+  }
+  .v-enter-to, .v-leave {
+    transform: translateX(0%);
+  }
+  .v-enter-active, .v-leave-active {
+    transition: transform 1s;
   }
 </style>
