@@ -1,8 +1,20 @@
 <template>
+  <!--
   <div class="header" @click="switchTheme">
     <div class="header-left"></div>
     <p class="header-title">John's music list</p>
     <div class="header-right" @click.stop="accoutClick"></div>
+  </div>
+  -->
+  <div class="header" @click="switchTheme">
+    <!-- 注意点：不可以直接设置插槽样式，设置了也无效，要设置插槽样式必须使用一个 HTML 标签包裹插槽 -->
+    <div class="left">
+      <slot name="left">左</slot>
+    </div>
+    <slot name="center">中</slot>
+    <div class="right">
+      <slot name="right">右</slot>
+    </div>
   </div>
 </template>
 
@@ -22,9 +34,6 @@
           this.index = 0;
         }
         document.documentElement.setAttribute('data-theme', this.themes[this.index]);
-      },
-      accoutClick() {
-        this.$router.push('/account');
       }
     }
   }
@@ -37,34 +46,19 @@
   .header {
     width: 100%;
     height: 100px;
-    /*background-color: #f00;*/
     @include bg_color();
     display: flex;
     justify-content: space-between;
-    /*position: relative;
-    z-index: 999;*/
 
-    .header-left, .header-right {
+    .left, .right {
       width: 84px;
       height: 84px;
-      /*background-color: #000;*/
       margin-top: 8px;
-    }
 
-    .header-left {
-      @include bg_img("../assets/images/logo");
+      * {
+        width: 100%;
+        height: 100%;
+      }
     }
-
-    .header-right {
-      @include bg_img("../assets/images/account")
-    }
-  }
-
-  .header-title {
-    text-align: center;
-    line-height: 100px;
-    color: #fff;
-    font-weight: bold;
-    @include font_size($font_medium);
   }
 </style>

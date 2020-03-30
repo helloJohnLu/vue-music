@@ -1,15 +1,18 @@
 <template>
-  <div class="header" @click="switchTheme">
-    <div class="header-left" @click.stop="goBack"></div>
-    <ul class="header-title">
+  <Header class="header">
+    <div slot="left" class="header-left" @click.stop="goBack"></div>
+    <ul slot="center" class="header-title">
       <li :class="{'active': switchNum === 0}" @click.stop="switchHeaderTab(0)">我喜欢的</li>
       <li :class="{'active': switchNum === 1}" @click.stop="switchHeaderTab(1)">最近听的</li>
     </ul>
-    <div class="header-right"></div>
-  </div>
+    <div slot="right" class="header-right"></div>
+  </Header>
 </template>
 
 <script>
+  import Header from "../Header";
+
+
   export default {
     name: "AccountHeader",
     /*props: {
@@ -19,21 +22,15 @@
         required: true
       }
     },*/
+    components: {
+      Header
+    },
     data() {
       return {
-        themes: ['red', 'green', 'night'],
-        index: 0,
         switchNum: 0
       }
     },
     methods: {
-      switchTheme() {
-        this.index++;
-        if (this.index >= this.themes.length) {
-          this.index = 0;
-        }
-        document.documentElement.setAttribute('data-theme', this.themes[this.index]);
-      },
       goBack() {
         window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
       },
@@ -50,22 +47,6 @@
   @import "../../assets/css/mixin";
 
   .header {
-    width: 100%;
-    height: 100px;
-    /*background-color: #f00;*/
-    @include bg_color();
-    display: flex;
-    justify-content: space-between;
-    /*position: relative;
-    z-index: 999;*/
-
-    .header-left, .header-right {
-      width: 84px;
-      height: 84px;
-      /*background-color: #000;*/
-      margin-top: 8px;
-    }
-
     .header-left {
       @include bg_img("../../assets/images/back");
     }
