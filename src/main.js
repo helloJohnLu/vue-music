@@ -6,6 +6,7 @@ import fastclick from "fastclick"
 import './assets/css/base.scss'
 import VueLazyload from 'vue-lazyload'
 // import VCconsole from "vconsole";
+import Loading from "./plugin/loading/index"
 
 Vue.config.productionTip = false
 Vue.use(VueLazyload, {
@@ -16,6 +17,10 @@ Vue.use(VueLazyload, {
 // 移动端调试工具（在移动端打开控制台）
 // const vconsole = new VCconsole()
 // Vue.use(vconsole)
+
+Vue.use(Loading, {
+  title: '正在加载……'
+})
 
 fastclick.attach(document.body)
 
