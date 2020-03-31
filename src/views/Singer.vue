@@ -101,6 +101,12 @@
         this.$nextTick(() => {
           this.fixTitleHeight = this.$refs.elFixTitle.offsetHeight;
         });
+      },
+      // 切换页面隐藏加载框，防止数据没有加载完成时加载框一直显示
+      $route(to, from) {
+        if (to) {
+          this.$hiddenLoading();
+        }
       }
     },
     methods: {
