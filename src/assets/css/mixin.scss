@@ -9,6 +9,12 @@
   [data-dpr="3"] & {
     font-size: $font-size * 3;
   }
+  [data-dpr="4"] & {
+    font-size: $font-size * 4;
+  }
+  [data-dpr="5"] & {
+    font-size: $font-size * 5;
+  }
 }
 
 /* 通过该函数设置字体大小，后期方便统一管理；*/

@@ -6,6 +6,7 @@ import Vue from "vue";
 axios.defaults.baseURL = 'http://localhost:4000'
 axios.defaults.timeout = 5000
 
+/*
 let requestCount = 0;  // 发送请求数
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
@@ -30,8 +31,10 @@ axios.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
   // 对响应错误做点什么
+  Vue.hiddenLoading();
   return Promise.reject(error);
 });
+*/
 
 // 封装自己的 get/post 方法
 export default {
