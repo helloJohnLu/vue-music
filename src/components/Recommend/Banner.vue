@@ -58,6 +58,11 @@
     .item {
       width: 100%;
       height: 300px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 </style>
@@ -66,6 +71,8 @@
 
   /* 注意：如果想覆盖 swiper 样式，那么 style 标签不能是 scoped 的，不则无法覆盖 */
   .banner {
+    width: 100%;
+
     .swiper-pagination-bullet {
       width: 16px;
       height: 16px;

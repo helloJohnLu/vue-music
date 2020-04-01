@@ -9,8 +9,27 @@
       let scale = 1.0 / window.devicePixelRatio;
       let meta = `<meta name="viewport" content="width=device-width, initial-scale=${scale}, maximum-scale=${scale}, minimum-scale=${scale}, user-scalable=no">`;
       document.write(meta);
+
+      let winDpr = parseFloat(window.devicePixelRatio);
+      console.log(winDpr);
+      let dpr = 1;
+
+      if (winDpr >= 4) {
+        dpr = 4;
+      } else if (winDpr >= 3.5 && winDpr < 4) {
+        dpr = 3.75
+      } else if (winDpr >= 3 && winDpr < 3.5) {
+        dpr = 3;
+      } else if (winDpr >= 2.5 && winDpr < 3) {
+        dpr = 2.75;
+      } else if (winDpr >= 2 && winDpr < 2.5) {
+        dpr = 2;
+      } else if (winDpr >= 1.5 && winDpr < 2) {
+        dpr = 1.75;
+      }
+
       document.documentElement.style.fontSize = window.innerWidth / 7.5 + "px";
-      document.documentElement.setAttribute('data-dpr', window.devicePixelRatio + '');
+      document.documentElement.setAttribute('data-dpr', dpr + '');
       document.documentElement.setAttribute('data-theme', 'red');
     </script>
   </head>
